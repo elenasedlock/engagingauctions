@@ -1,0 +1,60 @@
+---
+// Google Analytics 4. Set PUBLIC_GA_ID in the Netlify environment (and in a
+// local .env for dev). Left unset, nothing renders, so builds and previews stay
+// tracker-free.
+const gaId = import.meta.env.PUBLIC_GA_ID;
+---
+{gaId && (
+  <>
+    <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}></script>
+    <script is:inline define:vars={{ gaId }}>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      window.gtag = gtag;
+      gtag('js', new Date());
+      // GA4 gives pageviews, country/region/city, device, browser, referrer and
+      // traffic source out of the box. Everything below is the extra intent
+      // signal: who tried to contact, and how.
+      gtag('config', gaId, { send_page_view: true });
+
+      document.addEventListener('click', function (e) {
+        const a = e.target.closest && e.target.closest('a');
+        if (!a) return;
+        const href = a.getAttribute('href') || '';
+
+        if (href.startsWith('tel:')) {
+          gtag('event', 'phone_click', { link_url: href });
+        } else if (href.startsWith('mailto:')) {
+          gtag('event', 'email_click', { link_url: href });
+        } else if (href.includes('calendly.com')) {
+          gtag('event', 'booking_click', { link_url: href });
+        } else if (/^https?:\/\//.test(href) && !href.includes(location.hostname)) {
+          gtag('event', 'outbound_click', { link_url: href, link_text: a.innerText.trim().slice(0, 80) });
+        }
+      });
+
+      // Netlify posts the form and redirects back with ?sent=1, so the submit
+      // handler can fire before navigation and the redirect confirms delivery.
+      document.addEventListener('submit', function (e) {
+        const f = e.target;
+        if (!f || f.tagName !== 'FORM') return;
+        gtag('event', 'form_submit', { form_name: f.getAttribute('name') || 'unnamed' });
+      });
+
+      if (new URLSearchParams(location.search).get('sent') === '1') {
+        gtag('event', 'generate_lead', { page_path: location.pathname });
+      }
+
+      // Scroll depth — tells you whether long pages (services, testimonials)
+      // actually get read.
+      var depths = [25, 50, 75, 90], hit = {};
+      window.addEventListener('scroll', function () {
+        var doc = document.documentElement;
+        var pct = (window.scrollY + window.innerHeight) / doc.scrollHeight * 100;
+        depths.forEach(function (d) {
+          if (pct >= d && !hit[d]) { hit[d] = true; gtag('event', 'scroll_depth', { percent: d }); }
+        });
+      }, { passive: true });
+    </script>
+  </>
+)}
