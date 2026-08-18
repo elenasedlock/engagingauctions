@@ -5,6 +5,7 @@ import Field from '../components/Field.astro';
 import Btn from '../components/Btn.astro';
 import { site } from '../data/site';
 
+// Each detail sits in its own pink panel with a maroon icon tile.
 const details = [
   { label: 'Email', value: site.email, href: `mailto:${site.email}`, icon: 'M3 5h18v14H3V5Zm2 2v.4l7 4.4 7-4.4V7H5Zm14 10V9.9l-7 4.4-7-4.4V17h14Z' },
   { label: 'Call Now', value: site.phone, href: site.phoneHref, icon: 'M6.6 3h3.2l1.6 4-2 1.4a12 12 0 0 0 5.2 5.2l1.4-2 4 1.6v3.2A2.6 2.6 0 0 1 17.4 19 14.4 14.4 0 0 1 5 6.6 2.6 2.6 0 0 1 6.6 3Z' },
@@ -20,56 +21,58 @@ const details = [
 
   <section class="wrap">
     <div class="flex flex-col py-[70px] md:py-[60px] lg:py-[70px]">
-      <!-- Intro: centred, max 980px, with the 5px maroon rule -->
-      <div class="mt-[30px] flex justify-center">
-        <p class="max-w-[980px] border-l-[5px] border-maroon pl-[15px] text-center font-sans text-[17px] font-light leading-[1.8] text-ink/85">
-          Looking forward to speaking with you more about your upcoming event.
-          Fill out the form or Schedule a time directly with Elena below
-        </p>
-      </div>
+      <!-- Intro: Cormorant, capitalized, centred, max 980px -->
+      <p class="mx-auto max-w-[980px] text-center font-display text-[26px] font-medium capitalize leading-[1.3] text-ink">
+        Looking forward to speaking with you more about your upcoming event.
+        Fill out the form or Schedule a time directly with Elena below
+      </p>
 
-      <!-- Two columns inside a 65%-wide block -->
-      <div class="mx-auto mt-[30px] flex w-full flex-col gap-5 lg:w-[85%] lg:flex-row xl:w-[75%]">
-        <div class="flex flex-col gap-5 px-2.5 pt-2.5 lg:w-[38%]">
-          <div class="flex flex-col gap-[15px] border-l-[5px] border-maroon pl-[15px]">
+      <div class="mt-[30px] flex flex-col gap-5 lg:flex-row">
+        <!-- Left: heading, CTA, contact panels -->
+        <div class="flex flex-col gap-5 p-2.5 lg:w-[34%]">
+          <div class="border-l-[5px] border-maroon pl-[15px]">
             <h2>Let's Talk About Your Event</h2>
           </div>
-          <Btn href="/consultation/" class="block w-full text-center">Schedule A Call With Elena</Btn>
 
-          <ul class="flex flex-col">
+          <Btn href="/consultation/" class="block w-full">Schedule A Call With Elena</Btn>
+
+          <ul class="flex flex-col gap-5">
             {details.map((d) => (
-              <li class="flex items-center gap-4 p-[25px]">
-                <span class="flex h-[60px] w-[60px] shrink-0 items-center justify-center bg-maroon text-white">
+              <li class="flex items-center gap-4 bg-tint8 p-[25px]">
+                <span class="flex h-[50px] w-[50px] shrink-0 items-center justify-center bg-maroon text-white">
                   <svg width="25" height="25" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d={d.icon} /></svg>
                 </span>
                 <div>
-                  <p class="eyebrow">{d.label}</p>
+                  <p class="font-display text-[22px] font-medium leading-tight text-ink">{d.label}</p>
                   {d.href
-                    ? <a href={d.href} class="font-display text-[22px] font-bold text-ink hover:text-maroon">{d.value}</a>
-                    : <span class="font-display text-[22px] font-bold text-ink">{d.value}</span>}
+                    ? <a href={d.href} class="font-sans text-[16px] font-light text-ink/80 hover:text-maroon">{d.value}</a>
+                    : <span class="font-sans text-[16px] font-light text-ink/80">{d.value}</span>}
                 </div>
               </li>
             ))}
           </ul>
         </div>
 
-        <div class="p-[35px] lg:flex-1">
+        <!-- Right: form on a pink panel -->
+        <div class="bg-tint8 p-[35px] lg:flex-1">
           <form
             name="contact"
             method="POST"
             data-netlify="true"
             netlify-honeypot="bot-field"
             action="/contact/?sent=1"
-            class="flex flex-col gap-5"
+            class="flex flex-col gap-4"
           >
             <input type="hidden" name="form-name" value="contact" />
             <p class="hidden"><label>Leave this empty: <input name="bot-field" /></label></p>
 
-            <Field name="name" label="Name" required placeholder="John Doe" />
-            <Field name="organization" label="Organization" placeholder="Organization Name" />
+            <div class="grid gap-4 sm:grid-cols-2">
+              <Field name="name" label="Name" required placeholder="John Doe" />
+              <Field name="organization" label="Organization" placeholder="Organization Name" />
+            </div>
             <Field name="phone" label="Phone" type="tel" required placeholder="Phone Number" />
             <Field name="email" label="Email" type="email" required placeholder="abc@gmail.com" />
-            <Field name="message" label="Message" textarea placeholder="How can we help you?" />
+            <Field name="message" label="Message" textarea rows={4} placeholder="How can we help you?" />
 
             <button type="submit" class="btn self-start bg-maroon px-5 text-cream hover:bg-[#5c1917]">
               Submit Now

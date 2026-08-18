@@ -13,29 +13,29 @@ const contact = [
 ---
 <footer class="bg-ink text-white">
   <div class="mx-auto flex w-full max-w-[1400px] flex-col gap-2.5 px-2.5 py-2.5">
-    <div class="grid min-h-[363px] gap-5 px-2.5 pb-2.5 pt-[50px] md:grid-cols-3">
-      <div>
+    <div class="grid min-h-[363px] gap-5 px-2.5 pb-2.5 pt-[50px] lg:grid-cols-[496px_386px_318px]">
+      <div class="p-2.5">
         <a href="/"><img src="/images/brand/logo-full.png" alt={site.name} class="w-[165px]" width="165" height="115" /></a>
-        <p class="mt-6 max-w-md text-[17px] font-light leading-[25.5px] text-white">{site.footerBlurb}</p>
+        <p class="mt-6 max-w-[476px] text-[17px] font-light leading-[25.5px] text-white">{site.footerBlurb}</p>
       </div>
 
-      <div class="md:pl-8">
+      <div class="p-2.5 lg:pl-[100px]">
         <h3 class="text-white">Quick Links</h3>
-        <ul class="mt-5">
+        <ul class="mt-5 flex flex-col gap-1">
           {quickLinks.map((l) => (
-            <li class="flex h-[32px] items-center">
+            <li class="flex h-[30px] items-center">
               <a href={l.href} class="text-[17px] font-light leading-[25.5px] text-white transition-colors hover:text-white">{l.label}</a>
             </li>
           ))}
         </ul>
       </div>
 
-      <div>
+      <div class="p-2.5">
         <h3 class="text-white">Contact Info</h3>
-        <ul class="mt-5 flex flex-col gap-4">
+        <ul class="mt-5 flex flex-col gap-2.5">
           {contact.map((c) => (
-            <li class="flex items-center gap-2.5">
-              <span class="flex h-[48px] w-[48px] shrink-0 items-center justify-center bg-maroon text-[#D4B46C]">
+            <li class="flex h-[49px] items-center gap-2.5">
+              <span class="flex h-[49px] w-[49px] shrink-0 items-center justify-center bg-maroon text-[#D4B46C]">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d={c.icon} /></svg>
               </span>
               {c.href ? (
