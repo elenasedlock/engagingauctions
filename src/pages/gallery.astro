@@ -28,14 +28,14 @@ const VISIBLE = 3;
         </div>
         <div class="flex flex-col gap-5 p-2.5 lg:flex-row">
           {videos.map((v) => (
-            <div class="h-[694px] w-full overflow-hidden bg-ink lg:w-[390px]">
+            <div class="relative h-[694px] w-full overflow-hidden bg-ink lg:w-[390px]">
               <iframe
                 src={`https://www.youtube-nocookie.com/embed/${v.data.youtubeId}?rel=0`}
                 title={v.data.title}
                 loading="lazy"
                 allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowfullscreen
-                class="h-full w-full"
+                class="absolute left-1/2 top-1/2 h-[118%] w-[118%] -translate-x-1/2 -translate-y-1/2"
               ></iframe>
             </div>
           ))}

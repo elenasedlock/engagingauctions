@@ -3,10 +3,12 @@ import Btn from './Btn.astro';
 interface Props {
   /** Only the homepage shows a single button; inner pages show two. */
   single?: boolean;
+  /** Live puts the panel right on the homepage and left on inner pages. */
+  panelSide?: 'left' | 'right';
   /** Section vertical padding: 70 on most pages, 100 on /testimonials/ and /videos/. */
   pad?: 70 | 100;
 }
-const { single = false, pad = 70 } = Astro.props;
+const { single = false, pad = 70, panelSide = 'left' } = Astro.props;
 ---
 <!--
   "Ready to Elevate Your Event?" band. From the Elementor export: photo
@@ -18,8 +20,8 @@ const { single = false, pad = 70 } = Astro.props;
   <div class="absolute inset-0 bg-ink/80" aria-hidden="true"></div>
 
   <div class="wrap relative">
-    <div class="grid gap-[30px] lg:grid-cols-[593px_617px]">
-      <div class="hidden lg:block"></div>
+    <div class:list={['grid gap-[30px]', panelSide === 'right' ? 'lg:grid-cols-[593px_617px]' : 'lg:grid-cols-[617px_593px]']}>
+      {panelSide === 'right' && <div class="hidden lg:block"></div>}
       <div class="flex flex-col gap-5 bg-white16 p-[30px]">
         <p class="eyebrow eyebrow-light">Ready To Elevate Your Event?</p>
         <h2 class="text-[40px] leading-[48px] text-white">
@@ -30,6 +32,7 @@ const { single = false, pad = 70 } = Astro.props;
           <Btn href="/contact/" variant={single ? 'primary' : 'secondary'}>Contact Our Team</Btn>
         </div>
       </div>
+      {panelSide === 'left' && <div class="hidden lg:block"></div>}
     </div>
   </div>
 </section>

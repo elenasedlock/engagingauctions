@@ -12,14 +12,14 @@ const path = Astro.url.pathname;
   id="site-header"
   class="site-header absolute inset-x-0 top-0 z-[999] transition-[background-color,box-shadow] duration-300"
 >
-  <div class="mx-auto flex w-full max-w-[1400px] items-center gap-5 px-2.5 py-2.5">
-    <div class="flex w-[302px] shrink-0 items-center p-1.5">
+  <div class="mx-auto flex w-full max-w-[1400px] items-center gap-5 px-2.5 py-1.5">
+    <div class="flex w-[302px] shrink-0 items-center py-1 pl-5">
       <a href="/">
         <img
           src="/images/brand/logo.webp"
           alt={site.name}
-          class="site-logo h-[87px] w-[125px] object-contain"
-          width="125" height="87"
+          class="site-logo h-[60px] w-[86px] object-contain"
+          width="86" height="60"
         />
       </a>
     </div>
@@ -83,7 +83,7 @@ const path = Astro.url.pathname;
     background-color: #fff;
     border-bottom: 1px solid #ececec;
   }
-  .site-header.is-stuck .site-logo { filter: none; width: 90px; }
+  .site-header.is-stuck .site-logo { filter: none; height: 52px; width: 75px; }
   .site-header.is-stuck .site-navlink { color: var(--color-primary, #121212); }
   .site-header.is-stuck .site-navlink:hover,
   .site-header.is-stuck .site-navlink.is-current { color: var(--color-maroon); }
