@@ -22,14 +22,14 @@ const details = [
   <section class="wrap">
     <div class="flex flex-col py-[70px] md:py-[60px] lg:py-[70px]">
       <!-- Intro: Cormorant, capitalized, centred, max 980px -->
-      <p class="mx-auto max-w-[980px] text-center font-display text-[26px] font-medium capitalize leading-[1.3] text-ink">
+      <p class="mx-auto max-w-[980px] text-center font-display text-[25px] font-medium capitalize leading-[30px] text-ink">
         Looking forward to speaking with you more about your upcoming event.
         Fill out the form or Schedule a time directly with Elena below
       </p>
 
-      <div class="mt-[30px] flex flex-col gap-5 lg:flex-row">
+      <div class="mt-[30px] flex flex-col lg:flex-row lg:gap-0">
         <!-- Left: heading, CTA, contact panels -->
-        <div class="flex flex-col gap-5 p-2.5 lg:w-[34%]">
+        <div class="flex flex-col gap-5 p-2.5 lg:w-[392px] lg:shrink-0">
           <div class="border-l-[5px] border-maroon pl-[15px]">
             <h2>Let's Talk About Your Event</h2>
           </div>
@@ -38,15 +38,15 @@ const details = [
 
           <ul class="flex flex-col gap-5">
             {details.map((d) => (
-              <li class="flex items-center gap-4 bg-tint8 p-[25px]">
+              <li class="flex items-center gap-4 bg-tint4 p-[25px]">
                 <span class="flex h-[50px] w-[50px] shrink-0 items-center justify-center bg-maroon text-white">
                   <svg width="25" height="25" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d={d.icon} /></svg>
                 </span>
                 <div>
-                  <p class="font-display text-[22px] font-medium leading-tight text-ink">{d.label}</p>
+                  <p class="font-display text-[30px] font-medium capitalize leading-[36px] text-ink">{d.label}</p>
                   {d.href
-                    ? <a href={d.href} class="font-sans text-[16px] font-light text-ink/80 hover:text-maroon">{d.value}</a>
-                    : <span class="font-sans text-[16px] font-light text-ink/80">{d.value}</span>}
+                    ? <a href={d.href} class="font-sans text-[17px] font-light leading-[25.5px] text-[#2E2E2E] hover:text-maroon">{d.value}</a>
+                    : <span class="font-sans text-[17px] font-light leading-[25.5px] text-[#2E2E2E]">{d.value}</span>}
                 </div>
               </li>
             ))}
@@ -54,19 +54,19 @@ const details = [
         </div>
 
         <!-- Right: form on a pink panel -->
-        <div class="bg-tint8 p-[35px] lg:flex-1">
+        <div class="bg-tint4 p-[35px] lg:flex-1">
           <form
             name="contact"
             method="POST"
             data-netlify="true"
             netlify-honeypot="bot-field"
             action="/contact/?sent=1"
-            class="flex flex-col gap-4"
+            class="flex flex-col gap-5"
           >
             <input type="hidden" name="form-name" value="contact" />
             <p class="hidden"><label>Leave this empty: <input name="bot-field" /></label></p>
 
-            <div class="grid gap-4 sm:grid-cols-2">
+            <div class="grid gap-5 sm:grid-cols-2">
               <Field name="name" label="Name" required placeholder="John Doe" />
               <Field name="organization" label="Organization" placeholder="Organization Name" />
             </div>

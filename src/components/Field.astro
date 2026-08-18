@@ -9,17 +9,16 @@ interface Props {
   rows?: number;
 }
 const { name, label, type = 'text', required = false, placeholder, textarea = false, rows = 4 } = Astro.props;
-// Live inputs: white, 1px rgba(201,4,0,.08) border, square, 7px 20px, 17px text.
-const cls =
-  'mt-2 w-full border border-tint8 bg-white px-5 py-[7px] font-sans text-[17px] font-light text-[#1c1c1c] outline-none placeholder:text-[#9a9a9a] focus:border-maroon';
+// Measured live: label Poppins 15/400/17px, 1px tracking, uppercase, rgba(0,0,0,.85).
+// Input 59px tall, white, 1px rgba(201,4,0,.08), padding 7/20, Poppins 17/300, #1c1c1c.
+const base =
+  'mt-2 w-full border border-tint8 bg-white px-5 py-[7px] font-sans text-[17px] font-light normal-case tracking-normal text-[#1c1c1c] outline-none placeholder:text-[#9a9a9a] focus:border-maroon';
 ---
-<label class="block">
-  <span class="font-sans text-[14px] font-medium uppercase tracking-[1px] text-ink/80">
-    {label}{required && <span class="text-[#c00]"> *</span>}
-  </span>
+<label class="block font-sans text-[15px] font-normal uppercase leading-[17px] tracking-[1px] text-[rgba(0,0,0,0.85)]">
+  {label}{required && <span class="text-[#c00]"> *</span>}
   {textarea ? (
-    <textarea name={name} rows={rows} required={required} placeholder={placeholder} class={cls}></textarea>
+    <textarea name={name} rows={rows} required={required} placeholder={placeholder} class={`${base} leading-[22.1px]`}></textarea>
   ) : (
-    <input type={type} name={name} required={required} placeholder={placeholder} class={cls} />
+    <input type={type} name={name} required={required} placeholder={placeholder} class={`${base} h-[59px] leading-[17px]`} />
   )}
 </label>
