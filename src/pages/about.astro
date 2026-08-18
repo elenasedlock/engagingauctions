@@ -29,7 +29,7 @@ const team = await Promise.all(
           <img
             src="/images/team/elena-walking.jpg"
             alt="Elena Sedlock"
-            class="aspect-[580/680] w-full object-cover object-top"
+            class="h-[680px] w-full object-cover object-top"
             width="580" height="680"
           />
         </div>
@@ -75,7 +75,7 @@ const team = await Promise.all(
                 src={data.photo}
                 alt={data.name}
                 class="w-full object-cover"
-                style={`aspect-ratio:586/${data.photoHeight}`}
+                style={`height:${data.photoHeight}px`}
                 width="586" height={data.photoHeight}
               />
             </div>

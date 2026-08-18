@@ -58,7 +58,7 @@ const VISIBLE = 3;
             <img
               src={p.data.image}
               alt={p.data.alt}
-              class:list={['gallery__item aspect-[407/400] w-full object-cover p-2.5', i >= VISIBLE && 'hidden']}
+              class:list={['gallery__item h-[400px] w-full object-cover p-2.5', i >= VISIBLE && 'hidden']}
               width="407" height="400" loading="lazy"
             />
           ))}

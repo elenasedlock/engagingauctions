@@ -3,13 +3,14 @@ import Base from '../layouts/Base.astro';
 import PageBanner from '../components/PageBanner.astro';
 import Field from '../components/Field.astro';
 import Btn from '../components/Btn.astro';
+import Icon from '../components/Icon.astro';
 import { site } from '../data/site';
 
 // Each detail sits in its own pink panel with a maroon icon tile.
 const details = [
-  { label: 'Email', value: site.email, href: `mailto:${site.email}`, icon: 'M3 5h18v14H3V5Zm2 2v.4l7 4.4 7-4.4V7H5Zm14 10V9.9l-7 4.4-7-4.4V17h14Z' },
-  { label: 'Call Now', value: site.phone, href: site.phoneHref, icon: 'M6.6 3h3.2l1.6 4-2 1.4a12 12 0 0 0 5.2 5.2l1.4-2 4 1.6v3.2A2.6 2.6 0 0 1 17.4 19 14.4 14.4 0 0 1 5 6.6 2.6 2.6 0 0 1 6.6 3Z' },
-  { label: 'Office Location', value: site.locationContact, href: null, icon: 'M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5Z' },
+  { label: 'Email', value: site.email, href: `mailto:${site.email}`, icon: 'envelope' as const },
+  { label: 'Call Now', value: site.phone, href: site.phoneHref, icon: 'phone' as const },
+  { label: 'Office Location', value: site.locationContact, href: null, icon: 'location' as const },
 ];
 ---
 
@@ -39,9 +40,7 @@ const details = [
           <ul class="flex flex-col gap-5">
             {details.map((d) => (
               <li class="flex items-center gap-4 bg-tint4 p-[25px]">
-                <span class="flex h-[50px] w-[50px] shrink-0 items-center justify-center bg-maroon text-white">
-                  <svg width="25" height="25" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d={d.icon} /></svg>
-                </span>
+                <Icon name={d.icon} size={25} view="stacked" box={50} />
                 <div class="min-w-0">
                   <p class="font-display text-[30px] font-medium capitalize leading-[36px] text-ink">{d.label}</p>
                   {d.href

@@ -55,7 +55,7 @@ const whyChoose = [
   <section class="wrap">
     <div class="grid items-start gap-5 py-[70px] lg:grid-cols-2 lg:[&>*]:h-[640px]">
       <div class="p-2.5">
-        <img src="/images/team/elena-home.jpg" alt="Elena Sedlock" class="aspect-[600/635] w-full object-cover object-top" width="600" height="635" />
+        <img src="/images/team/elena-home.jpg" alt="Elena Sedlock" class="h-[635px] w-full object-cover object-top" width="600" height="635" />
         <div class="relative z-10 mx-auto -mt-[185px] w-[90%] bg-maroon p-[25px] text-center">
           <h3 class="text-[40px] leading-[48px] text-white">Elena Sedlock</h3>
           <SocialIcons class="mt-4 justify-center gap-[10px]" size={15} cream />
@@ -120,7 +120,7 @@ const whyChoose = [
         {services.map((s, i) => (
           <article class="flex flex-col gap-5 bg-tint4 p-[25px] text-center">
             {s.data.image && (
-              <img src={s.data.image} alt={s.data.title} class="aspect-[337/260] w-full object-cover" width="337" height="260" loading="lazy" />
+              <img src={s.data.image} alt={s.data.title} class="h-[260px] w-full object-cover" width="337" height="260" loading="lazy" />
             )}
             <Icon name={(["user","heart-multiple","play"][i] ?? "user") as any} size={25} view="cream" box={51} class="-mt-[88px] mr-[15px] self-end" />
             <h3 class="text-center">{s.data.title}</h3>

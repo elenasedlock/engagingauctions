@@ -28,7 +28,7 @@ const steps = await Promise.all(
         <ol class="grid gap-5 md:grid-cols-3">
           {steps.map(({ data, Content }) => (
             <li class="flex flex-col gap-5 bg-maroon p-[25px] text-white">
-              <Icon name={({chat:"chat",check:"check-square",play:"play"}[data.icon] ?? "chat") as any} size={35} view="stacked" box={70} />
+              <Icon name={({chat:"chat",check:"check-square",play:"play"}[data.icon] ?? "chat") as any} size={35} view="cream" box={70} />
               <h3 class="text-[28px] leading-[33.6px] text-white">Step {data.step}: {data.title}</h3>
               <div class="text-[16px] font-light leading-[24px] text-white"><Content /></div>
             </li>
@@ -49,14 +49,14 @@ const steps = await Promise.all(
           ]}
         >
           <div class="flex flex-col gap-5 p-2.5 lg:flex-1">
-            <Icon name={(["user","heart-multiple","play"][i] ?? "user") as any} size={25} view="stacked" box={51} />
+            <Icon name={(["user","heart-multiple","play"][i] ?? "user") as any} size={25} view="cream" box={51} />
             <h2>{s.data.title}</h2>
             <p class="font-sans text-[18px] font-light leading-[27px] text-[#2E2E2E]">{s.data.blurb}</p>
             <div><Btn href="/consultation/">Get Consultation</Btn></div>
           </div>
           {s.data.image && (
             <div class="p-2.5 lg:flex-1">
-              <img src={s.data.image} alt={s.data.title} class="w-full object-cover" style={`aspect-ratio:590/${s.data.imageHeight}`} width="590" height={s.data.imageHeight} />
+              <img src={s.data.image} alt={s.data.title} class="w-full object-cover" style={`height:${s.data.imageHeight}px`} width="590" height={s.data.imageHeight} />
             </div>
           )}
         </div>

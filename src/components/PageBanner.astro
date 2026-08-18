@@ -1,4 +1,6 @@
 ---
+import HeroSlideshow from './HeroSlideshow.astro';
+
 interface Props {
   title: string;
   crumb?: string;
@@ -23,13 +25,7 @@ const slideshow = [
   {image ? (
     <div class="absolute inset-0 bg-cover bg-center" style={`background-image:url(${image})`} aria-hidden="true"></div>
   ) : (
-    <div class="hero-ss absolute inset-0" data-duration="5000" aria-hidden="true">
-      {slideshow.map((src) => (
-        <div class="hero-ss__slide absolute inset-0">
-          <div class="hero-ss__img h-full w-full bg-cover bg-center" style={`background-image:url(${src})`}></div>
-        </div>
-      ))}
-    </div>
+    <HeroSlideshow images={slideshow} duration={5000} />
   )}
   <div class="absolute inset-0 bg-black/35" aria-hidden="true"></div>
 

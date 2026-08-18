@@ -1,6 +1,7 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
+import icon from 'astro-icon';
 import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
@@ -9,6 +10,6 @@ export default defineConfig({
   // means the cutover needs no redirects.
   trailingSlash: 'always',
   build: { format: 'directory' },
-  integrations: [sitemap()],
+  integrations: [sitemap(), icon()],
   vite: { plugins: [tailwindcss()] },
 });

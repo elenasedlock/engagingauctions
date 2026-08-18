@@ -1,13 +1,13 @@
 ---
-interface Props { images: string[] }
-const { images } = Astro.props;
+interface Props { images: string[]; duration?: number }
+const { images, duration = 7000 } = Astro.props;
 ---
 <!--
   Reproduces Elementor's background slideshow settings exactly:
   slide_duration 7000ms, transition_duration 500ms, slide_up transition,
   ken_burns zoom "in", loop.
 -->
-<div class="hero-ss absolute inset-0 overflow-hidden" data-duration="7000" aria-hidden="true">
+<div class="hero-ss absolute inset-0 overflow-hidden" data-duration={duration} aria-hidden="true">
   {images.map((src, i) => (
     <div class="hero-ss__slide absolute inset-0" data-i={i}>
       <div class="hero-ss__img h-full w-full bg-cover bg-center" style={`background-image:url(${src})`}></div>

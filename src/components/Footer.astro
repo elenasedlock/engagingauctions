@@ -1,14 +1,15 @@
 ---
 import { site } from '../data/site';
 import SocialIcons from './SocialIcons.astro';
+import Icon from './Icon.astro';
 
 const quickLinks = [...site.nav.slice(0, 5), { label: "FAQ's", href: '/faqs/' }, { label: 'Contact', href: '/contact/' }];
 
 // Contact rows: 20px icon on a maroon tile, Cormorant Garamond 22px/700 label.
 const contact = [
-  { label: site.phone, href: site.phoneHref, icon: 'M6.6 3h3.2l1.6 4-2 1.4a12 12 0 0 0 5.2 5.2l1.4-2 4 1.6v3.2A2.6 2.6 0 0 1 17.4 19 14.4 14.4 0 0 1 5 6.6 2.6 2.6 0 0 1 6.6 3Z' },
-  { label: site.email, href: `mailto:${site.email}`, icon: 'M3 5h18v14H3V5Zm2 2v.4l7 4.4 7-4.4V7H5Zm14 10V9.9l-7 4.4-7-4.4V17h14Z' },
-  { label: site.locationFooter, href: '#', icon: 'M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5Z' },
+  { label: site.phone, href: site.phoneHref, icon: 'phone' as const },
+  { label: site.email, href: `mailto:${site.email}`, icon: 'envelope' as const },
+  { label: site.locationFooter, href: '#', icon: 'location' as const },
 ];
 ---
 <footer class="bg-ink text-white">
