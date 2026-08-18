@@ -1,13 +1,24 @@
 ---
 import { site } from '../data/site';
 import Icon from './Icon.astro';
-interface Props { iconSize?: number }
-const { iconSize = 24 } = Astro.props;
+interface Props {
+  iconSize?: number;
+  /**
+   * The label typography differs per page:
+   *   home  — Poppins 15px/500/18px, uppercase, #121212
+   *   about — Poppins 19px/400/28.5px, capitalize, #000
+   */
+  variant?: 'home' | 'about';
+}
+const { iconSize = 24, variant = 'home' } = Astro.props;
+const label = variant === 'about'
+  ? 'font-sans text-[19px] font-normal capitalize leading-[28.5px] text-black'
+  : 'font-sans text-[15px] font-medium uppercase leading-[18px] tracking-[1px] text-ink';
 ---
 <!-- Elementor: container padding 25, gap 10, stacked icon (fas fa-file-invoice-dollar), h4 centred. -->
 <div class="flex flex-col items-center gap-2.5 bg-tint8 p-[25px] text-center">
   <Icon name="file-invoice-dollar" size={iconSize} view="stacked" box={60} />
-  <p class="font-sans text-[15px] font-medium uppercase leading-[18px] tracking-[1px] text-ink">
+  <p class:list={[label, "w-full text-center"]}>
     {site.raised} Raised For Organizations &amp; Causes
   </p>
 </div>

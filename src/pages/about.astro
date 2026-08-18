@@ -25,13 +25,15 @@ const team = await Promise.all(
   <section class="wrap">
     <div class="flex flex-col gap-5 py-[70px]">
       <div class="grid gap-5 px-2.5 py-5 lg:grid-cols-2">
-        <img
-          src="/images/team/elena-walking.jpg"
-          alt="Elena Sedlock"
-          class="h-[680px] w-full object-cover"
-          width="580" height="680"
-        />
-        <div class="flex flex-col gap-5">
+        <div class="p-2.5">
+          <img
+            src="/images/team/elena-walking.jpg"
+            alt="Elena Sedlock"
+            class="h-[680px] w-full object-cover object-top"
+            width="580" height="680"
+          />
+        </div>
+        <div class="flex flex-col gap-5 p-2.5">
           <SectionHeading eyebrow="About Engaging Auctions" title="Experienced Auction Professionals You Can Trust" />
           <p class="body-copy text-ink/80">
             Engaging Auctions was founded with a simple belief: fundraising works
@@ -56,7 +58,7 @@ const team = await Promise.all(
         </div>
       </div>
 
-      <div class="p-2.5"><ImpactPanel iconSize={26} /></div>
+      <div class="p-2.5"><ImpactPanel iconSize={26} variant="about" /></div>
     </div>
   </section>
 
@@ -67,11 +69,19 @@ const team = await Promise.all(
         <SectionHeading eyebrow="Team" title="Meet Our Professionals" class="!gap-[15px]" />
 
         {team.map(({ data, Content }) => (
-          <div class="grid items-center gap-5 p-2.5 lg:grid-cols-2">
-            <img src={data.photo} alt={data.name} class="w-full object-cover" style={`height:${data.photoHeight}px`} width="586" height={data.photoHeight} loading="lazy" />
-            <div class="flex flex-col gap-5">
+          <div class="flex flex-col items-center gap-5 p-2.5 lg:flex-row lg:justify-between">
+            <div class="w-full lg:w-[48%]">
+              <img
+                src={data.photo}
+                alt={data.name}
+                class="w-full object-cover"
+                style={`height:${data.photoHeight}px`}
+                width="586" height={data.photoHeight}
+              />
+            </div>
+            <div class="flex w-full flex-col gap-5 lg:w-[48%]">
               <h3 class="text-[30px] leading-[36px]">{data.name}</h3>
-              <div class="body-copy text-ink/80"><Content /></div>
+              <div class="body-copy"><Content /></div>
               <div><Btn href="/consultation/" class="!p-2.5">Contact Me</Btn></div>
             </div>
           </div>
