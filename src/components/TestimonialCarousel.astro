@@ -16,8 +16,8 @@ const testimonials = await Promise.all(
   <div class="tc__viewport flex-1 overflow-hidden">
     <div class="tc__track flex">
       {testimonials.map(({ data, Content }) => (
-        <figure class="tc__slide w-full shrink-0 bg-white p-[45px]">
-          <blockquote class="font-sans text-[17px] font-light leading-[1.7] text-[#333]">
+        <figure class="tc__slide w-full shrink-0 bg-tint4 p-[45px]">
+          <blockquote class="font-sans text-[17px] font-light leading-[25.5px] text-[#2E2E2E]">
             <Content />
           </blockquote>
           <figcaption class="mt-6 flex items-center gap-4">
@@ -38,7 +38,7 @@ const testimonials = await Promise.all(
 
   <div class="tc__dots mt-4 flex justify-center gap-2.5">
     {testimonials.map((_, i) => (
-      <button type="button" class="tc__dot h-[3px] w-[40px] bg-ink/25 transition-all" data-i={i} aria-label={`Go to testimonial ${i + 1}`}></button>
+      <button type="button" class="tc__dot h-[3px] w-[40px] bg-brick-dark transition-all" data-i={i} aria-label={`Go to testimonial ${i + 1}`}></button>
     ))}
   </div>
 </div>
