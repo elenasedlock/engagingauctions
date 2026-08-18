@@ -3,13 +3,12 @@ import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import PageBanner from '../components/PageBanner.astro';
 import SectionHeading from '../components/SectionHeading.astro';
-import VideoEmbed from '../components/VideoEmbed.astro';
 import Btn from '../components/Btn.astro';
 
 const photos = (await getCollection('gallery')).sort((a, b) => a.data.order - b.data.order);
-const videos = (await getCollection('videos')).sort((a, b) => a.data.order - b.data.order);
+const videos = (await getCollection('videos')).sort((a, b) => a.data.order - b.data.order).filter((v) => v.data.short);
 
-// The live gallery shows three photos and reveals the rest via "Load More".
+// Live shows three photos and reveals the rest behind "Load More".
 const VISIBLE = 3;
 ---
 
@@ -19,49 +18,56 @@ const VISIBLE = 3;
 >
   <PageBanner title="Gallery" image="/images/banner/services.webp" />
 
-  <!-- Videos — bg rgba(201,4,0,.04) -->
+  <!-- Videos — two portrait Shorts at 390x694 -->
   <section class="bg-tint4">
     <div class="wrap">
       <div class="flex flex-col gap-5 py-[70px] md:py-[60px] lg:py-[70px]">
         <div class="flex flex-col items-start justify-between gap-5 lg:flex-row">
-          <SectionHeading eyebrow="Highlights" title="Videos Moments From Our Auctions" class="!gap-[15px] lg:w-[70%]" />
-          <div class="lg:text-right"><Btn href="/consultation/">Event Consultation</Btn></div>
+          <SectionHeading eyebrow="Highlights" title="Videos Moments From Our Auctions" class="!gap-[15px] lg:w-[854px]" />
+          <div class="p-2.5 lg:text-right"><Btn href="/consultation/">Event Consultation</Btn></div>
         </div>
-        <div class="mt-4 flex flex-col gap-5 lg:flex-row">
-          {videos.filter((v) => !v.data.short).map((v) => (
-            <div class="h-[600px] p-2.5 max-[576px]:h-[400px] lg:w-[32%]"><VideoEmbed id={v.data.youtubeId} title={v.data.title} fill /></div>
-          ))}
-        </div>
-        <div class="mt-2 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {videos.filter((v) => v.data.short).map((v) => (
-            <VideoEmbed id={v.data.youtubeId} title={v.data.title} short />
+        <div class="flex flex-col gap-5 p-2.5 lg:flex-row">
+          {videos.map((v) => (
+            <div class="h-[694px] w-full overflow-hidden bg-ink lg:w-[390px]">
+              <iframe
+                src={`https://www.youtube-nocookie.com/embed/${v.data.youtubeId}?rel=0`}
+                title={v.data.title}
+                loading="lazy"
+                allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen
+                class="h-full w-full"
+              ></iframe>
+            </div>
           ))}
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Photos — Load More reveals the rest, as on the live gallery -->
+  <!-- Photos — 407x400 each with 10px padding, three across, Load More reveals the rest -->
   <section class="wrap">
     <div class="flex flex-col gap-5 py-[70px] md:py-[60px] lg:py-[70px]">
       <div class="flex flex-col items-start justify-between gap-5 lg:flex-row">
-        <SectionHeading eyebrow="Highlights" title="Photos Moments From Our Auctions" class="!gap-[15px] lg:w-[70%]" />
-        <div class="lg:text-right"><Btn href="/consultation/">Event Consultation</Btn></div>
+        <SectionHeading eyebrow="Highlights" title="Photos Moments From Our Auctions" class="!gap-[15px] lg:w-[854px]" />
+        <div class="p-2.5 lg:text-right"><Btn href="/consultation/">Event Consultation</Btn></div>
       </div>
 
-      <div class="gallery mt-4" data-visible={VISIBLE}>
-        <div class="grid gap-5 md:grid-cols-3">
+      <div class="gallery" data-visible={VISIBLE}>
+        <div class="grid grid-cols-1 p-2.5 sm:grid-cols-2 lg:grid-cols-3">
           {photos.map((p, i) => (
             <img
               src={p.data.image}
               alt={p.data.alt}
-              class:list={['gallery__item h-[400px] w-full object-cover p-2.5 max-[576px]:h-[300px]', i >= VISIBLE && 'hidden']}
-              width="400" height="300" loading="lazy" />
+              class:list={['gallery__item h-[400px] w-full object-cover p-2.5', i >= VISIBLE && 'hidden']}
+              width="407" height="400" loading="lazy"
+            />
           ))}
         </div>
         {photos.length > VISIBLE && (
-          <div class="mt-8">
-            <button type="button" class="gallery__more btn btn-primary">Load More</button>
+          <div class="mt-8 p-2.5">
+            <button type="button" class="gallery__more btn bg-maroon text-white hover:bg-[#5c1917]" style="padding:20px 40px">
+              Load More
+            </button>
           </div>
         )}
       </div>
@@ -74,7 +80,7 @@ const VISIBLE = 3;
     const btn = root.querySelector<HTMLButtonElement>('.gallery__more');
     btn?.addEventListener('click', () => {
       root.querySelectorAll('.gallery__item.hidden').forEach((el) => el.classList.remove('hidden'));
-      btn.remove();
+      btn.closest('div')?.remove();
     });
   });
 </script>
