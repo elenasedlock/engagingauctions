@@ -2,6 +2,8 @@
 name: Amanda Seguna
 org: Crohn's & Colitis Foundation, Greater NY Chapter
 logo: /images/testimonials/amanda-seguna.png
+logoWidth: 108
+logoHeight: 91
 order: 1
 featured: true
 ---

@@ -23,7 +23,7 @@ const testimonials = await Promise.all(
     2em padding, quote text and an image-box (140px logo + name + role).
   -->
   <section class="wrap">
-    <div class="flex flex-wrap gap-5 py-[70px] md:py-[60px] lg:py-[70px]">
+    <div class="flex flex-wrap gap-5 p-2.5 py-[70px] md:py-[60px] lg:py-[70px]">
       <div class="w-full">
         <SectionHeading eyebrow="Client Experiences" title="Testimonials Event Hosts & Organizations" class="!gap-[15px]" />
       </div>
@@ -31,19 +31,24 @@ const testimonials = await Promise.all(
       {testimonials.map(({ data, Content }, i) => (
         <figure
           class:list={[
-            'flex flex-col gap-6 p-[2em]',
-            i < 2 ? 'w-full lg:w-[49%]' : 'w-full',
-            i === 2 && 'bg-tint4',
+            'flex flex-col justify-between gap-6 bg-tint4 p-[32px]',
+            i < 2 ? 'w-full lg:min-h-[423px] lg:w-[calc(50%-10px)]' : 'w-full lg:min-h-[324px]',
           ]}
         >
-          <blockquote class="text-[17px] font-light leading-[1.7] text-[#333]"><Content /></blockquote>
+          <blockquote class="font-sans text-[17px] font-light leading-[25.5px] text-[#2E2E2E]"><Content /></blockquote>
           <figcaption class="flex items-center gap-5">
             {data.logo && (
-              <img src={data.logo} alt={data.org} class="h-[140px] w-[140px] shrink-0 object-contain" width="140" height="140" loading="lazy" />
+              <img
+                src={data.logo}
+                alt={data.org}
+                class="shrink-0 object-fill"
+                style={`width:${data.logoWidth}px;height:${data.logoHeight}px`}
+                width={data.logoWidth} height={data.logoHeight}
+              />
             )}
-            <div>
-              <p class="font-display text-[22px] font-semibold leading-tight text-[#2e2e2e]">{data.name}</p>
-              <p class="mt-1 font-sans text-[16px] font-light text-maroon">
+            <div class="flex-1">
+              <p class="font-display text-[25px] font-medium capitalize leading-[30px] text-ink">{data.name}</p>
+              <p class="font-sans text-[17px] font-light leading-[25.5px] text-maroon">
                 {data.role ? `${data.role}, ${data.org}` : data.org}
               </p>
             </div>

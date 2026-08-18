@@ -3,6 +3,8 @@ name: Caroline Packer
 org: GallopNYC
 role: Director of Development and Marketing
 logo: /images/testimonials/caroline-packer.jpeg
+logoWidth: 108
+logoHeight: 83
 order: 2
 featured: true
 ---

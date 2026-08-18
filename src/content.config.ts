@@ -14,6 +14,8 @@ const testimonials = defineCollection({
     org: z.string().min(1),
     role: z.string().optional(),
     logo: z.string().optional(),
+    logoWidth: z.number().default(108),
+    logoHeight: z.number().default(91),
     order: z.number().default(99),
     featured: z.boolean().default(false),
   }),

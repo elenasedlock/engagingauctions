@@ -3,6 +3,8 @@ name: Jenna Taylor
 org: Independent Identity
 role: Executive Director & Founder
 logo: /images/testimonials/jenna-taylor.jpg
+logoWidth: 123
+logoHeight: 123
 order: 3
 featured: true
 ---
