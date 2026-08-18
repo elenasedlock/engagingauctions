@@ -17,10 +17,10 @@ const { single = false, pad = 70, panelSide = 'left' } = Astro.props;
 -->
 <section class="relative bg-ink" style={`padding-top:${pad}px;padding-bottom:${pad}px`}>
   <div class="absolute inset-0 bg-fixed bg-cover bg-top" style="background-image:url(/images/banner/cta-bg.jpeg)" aria-hidden="true"></div>
-  <div class="absolute inset-0 bg-ink/80" aria-hidden="true"></div>
+  <div class="absolute inset-0 bg-ink/65" aria-hidden="true"></div>
 
   <div class="wrap relative">
-    <div class:list={['grid gap-[30px]', panelSide === 'right' ? 'lg:grid-cols-[593px_617px]' : 'lg:grid-cols-[617px_593px]']}>
+    <div class:list={['grid gap-[30px]', 'lg:grid-cols-2']}>
       {panelSide === 'right' && <div class="hidden lg:block"></div>}
       <div class="flex flex-col gap-5 bg-white16 p-[30px]">
         <p class="eyebrow eyebrow-light">Ready To Elevate Your Event?</p>

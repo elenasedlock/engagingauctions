@@ -12,8 +12,8 @@ const path = Astro.url.pathname;
   id="site-header"
   class="site-header absolute inset-x-0 top-0 z-[999] transition-[background-color,box-shadow] duration-300"
 >
-  <div class="mx-auto flex w-full max-w-[1400px] items-center gap-5 px-2.5 py-1.5">
-    <div class="flex w-[302px] shrink-0 items-center py-1 pl-5">
+  <div class="mx-auto flex w-full max-w-[1400px] items-center gap-5 px-2.5 py-1">
+    <div class="flex w-[302px] shrink-0 items-center py-0.5 pl-5">
       <a href="/">
         <img
           src="/images/brand/logo.webp"
@@ -36,8 +36,8 @@ const path = Astro.url.pathname;
       ))}
     </nav>
 
-    <div class="ml-auto hidden items-center justify-end gap-[10px] p-2.5 lg:flex">
-      <SocialIcons size={15} boxed />
+    <div class="ml-auto hidden items-center justify-end gap-[6px] p-2.5 lg:flex">
+      <SocialIcons class="gap-[6px]" size={15} boxed />
     </div>
 
     <details class="relative ml-auto lg:hidden">

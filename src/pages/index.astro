@@ -30,7 +30,7 @@ const whyChoose = [
   <!-- 1. Hero — background slideshow, min-height 792px, padding 140/80 -->
   <section class="relative min-h-[110vh] overflow-hidden bg-ink">
     <HeroSlideshow images={heroSlides} />
-    <div class="absolute inset-0 bg-black/45" aria-hidden="true"></div>
+    <div class="absolute inset-0 bg-black/55" aria-hidden="true"></div>
     <ShapeDivider height={70} />
 
     <div class="wrap relative">
@@ -55,7 +55,7 @@ const whyChoose = [
   <section class="wrap">
     <div class="grid items-start gap-5 py-[70px] lg:grid-cols-2 lg:[&>*]:h-[640px]">
       <div class="p-2.5">
-        <img src="/images/team/elena-home.jpg" alt="Elena Sedlock" class="h-[635px] w-full object-cover object-top" width="600" height="635" />
+        <img src="/images/team/elena-home.jpg" alt="Elena Sedlock" class="aspect-[600/635] w-full object-cover object-top" width="600" height="635" />
         <div class="relative z-10 mx-auto -mt-[185px] w-[90%] bg-maroon p-[25px] text-center">
           <h3 class="text-[40px] leading-[48px] text-white">Elena Sedlock</h3>
           <SocialIcons class="mt-4 justify-center gap-[10px]" size={15} cream />
@@ -92,7 +92,7 @@ const whyChoose = [
         <SectionHeading eyebrow="Why Choose Engaging Auctions" title="More Than An Auction — A Complete Experience" light />
         <div class="grid gap-5 p-2.5 md:grid-cols-2">
           {whyChoose.map((c) => (
-            <div class="flex min-h-[335px] flex-col items-center gap-5 bg-white p-10 text-center">
+            <div class="flex flex-col items-center gap-5 bg-white p-10 text-center">
               <Icon name={c.icon as any} size={35} view="framed" box={70} />
               <h3 class="text-center">{c.title}</h3>
               <p class="body-copy text-center text-ink/80">{c.body}</p>
@@ -118,11 +118,11 @@ const whyChoose = [
 
       <div class="grid gap-5 md:grid-cols-3">
         {services.map((s, i) => (
-          <article class="flex min-h-[587px] flex-col gap-5 bg-tint4 p-[25px] text-center">
+          <article class="flex flex-col gap-5 bg-tint4 p-[25px] text-center">
             {s.data.image && (
-              <img src={s.data.image} alt={s.data.title} class="h-[260px] w-full object-cover" width="337" height="260" loading="lazy" />
+              <img src={s.data.image} alt={s.data.title} class="aspect-[337/260] w-full object-cover" width="337" height="260" loading="lazy" />
             )}
-            <Icon name={(["user","heart-multiple","play"][i] ?? "user") as any} size={25} view="stacked" box={51} class="ml-auto" />
+            <Icon name={(["user","heart-multiple","play"][i] ?? "user") as any} size={25} view="cream" box={51} class="-mt-[88px] mr-[15px] self-end" />
             <h3 class="text-center">{s.data.title}</h3>
             <p class="body-copy text-center text-ink/80">{s.data.blurb}</p>
             <a

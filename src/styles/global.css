@@ -65,7 +65,9 @@
 .eyebrow-light { color: #fff; }
 
 /* Container: 1400px max, 20px gutter, matching Elementor's boxed containers. */
-.wrap { width: 100%; max-width: 1400px; margin-inline: auto; padding-inline: 20px; }
+/* Elementor boxed container: content is exactly 1400px at wide viewports,
+   with the 20px gutter only applying once the viewport is narrower. */
+.wrap { width: 100%; max-width: 1440px; margin-inline: auto; padding-inline: 20px; }
 
 /* Buttons: square, 20px padding, uppercase Poppins 15/500 with 1px tracking. */
 .btn {
@@ -82,9 +84,9 @@
   transition: background-color .2s, color .2s;
 }
 .btn-primary { background: var(--color-maroon); color: #fff; }
-.btn-primary:hover { background: #5c1917; }
+.btn-primary:hover { background: var(--color-cream); color: var(--color-maroon); }
 .btn-secondary { background: var(--color-cream); color: var(--color-maroon); }
-.btn-secondary:hover { background: #eeedde; }
+.btn-secondary:hover { background: var(--color-maroon); color: var(--color-cream); }
 
 /* Global text style: Poppins 17px, weight 300. */
 /* Live: Poppins 17px / 300 / 25.5px, colour #2E2E2E. */
