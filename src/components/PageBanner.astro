@@ -1,0 +1,57 @@
+---
+interface Props {
+  title: string;
+  crumb?: string;
+  /** Static background image. Omit to use the 5-image slideshow (used on /about/). */
+  image?: string;
+}
+const { title, crumb, image } = Astro.props;
+
+// Every inner-page banner is min-height 420px (250px on mobile) with 85px/20px
+// padding, and sits under the 117px header exactly as the homepage hero does.
+const slideshow = [
+  '/images/banner/banner-1.jpg',
+  '/images/banner/banner-2.jpg',
+  '/images/banner/banner-3.jpg',
+  '/images/banner/banner-4.jpg',
+  '/images/banner/banner-5.jpg',
+];
+---
+<section class="relative min-h-[250px] overflow-hidden bg-ink md:min-h-[420px]">
+  {image ? (
+    <div class="absolute inset-0 bg-cover bg-center" style={`background-image:url(${image})`} aria-hidden="true"></div>
+  ) : (
+    <div class="hero-ss absolute inset-0" data-duration="5000" aria-hidden="true">
+      {slideshow.map((src) => (
+        <div class="hero-ss__slide absolute inset-0">
+          <div class="hero-ss__img h-full w-full bg-cover bg-center" style={`background-image:url(${src})`}></div>
+        </div>
+      ))}
+    </div>
+  )}
+  <div class="absolute inset-0 bg-black/35" aria-hidden="true"></div>
+
+  <div class="wrap relative">
+    <div class="flex flex-col items-start justify-between gap-5 pb-5 pt-[85px] sm:flex-row sm:items-center">
+      <div class="p-2.5">
+        <h1 class="text-[50px] leading-[55px] text-white">{title}</h1>
+      </div>
+      <nav aria-label="Breadcrumb" class="p-2.5">
+        <ol class="flex items-center gap-2 bg-cream px-5 py-2 font-sans text-[15px] uppercase tracking-[1px] text-maroon">
+          <li class="flex items-center gap-2">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+              <path d="M8 1.5 1 7.2h2v7.3h4V10h2v4.5h4V7.2h2L8 1.5Z" />
+            </svg>
+            <a href="/" class="hover:underline">Home</a>
+          </li>
+          <li aria-hidden="true">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M2.5 8h11M9.5 4.5 13 8l-3.5 3.5" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </li>
+          <li aria-current="page">{crumb ?? title}</li>
+        </ol>
+      </nav>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,32 @@
+---
+import { site } from '../data/site';
+interface Props { class?: string; size?: number; boxed?: boolean; cream?: boolean }
+const { class: cls = '', size = 16, boxed = false, cream = false } = Astro.props;
+const box = cream ? 'flex h-[30px] w-[30px] items-center justify-center bg-cream text-maroon' : 'flex h-[30px] w-[30px] items-center justify-center bg-maroon text-white';
+
+// The live site renders these four icons with no href. They are reproduced as
+// non-links until real profile URLs exist in site.ts, at which point they
+// become real links automatically.
+const icons = [
+  { key: 'facebook', label: 'Facebook', path: 'M9.1 8.2H7V11h2.1v7h2.9v-7h2.1l.4-2.8h-2.5V6.9c0-.7.2-1.2 1.2-1.2h1.3V3.1A17 17 0 0 0 12.6 3c-1.9 0-3.5 1.2-3.5 3.5v1.7Z' },
+  { key: 'instagram', label: 'Instagram', path: 'M10.5 3c-2 0-2.3 0-3.1.05-.8.03-1.3.16-1.8.35-.5.2-.9.45-1.3.85-.4.4-.65.8-.85 1.3-.19.5-.32 1-.35 1.8C3.1 8.2 3.1 8.5 3.1 10.5s0 2.3.05 3.1c.03.8.16 1.3.35 1.8.2.5.45.9.85 1.3.4.4.8.65 1.3.85.5.19 1 .32 1.8.35.8.05 1.1.05 3.1.05s2.3 0 3.1-.05c.8-.03 1.3-.16 1.8-.35.5-.2.9-.45 1.3-.85.4-.4.65-.8.85-1.3.19-.5.32-1 .35-1.8.05-.8.05-1.1.05-3.1s0-2.3-.05-3.1c-.03-.8-.16-1.3-.35-1.8a3.6 3.6 0 0 0-.85-1.3 3.6 3.6 0 0 0-1.3-.85c-.5-.19-1-.32-1.8-.35C12.8 3 12.5 3 10.5 3Zm0 1.6c2 0 2.2 0 3 .05.7.03 1.1.15 1.4.25.35.14.6.3.85.55.25.25.41.5.55.85.1.3.22.7.25 1.4.05.8.05 1 .05 3s0 2.2-.05 3c-.03.7-.15 1.1-.25 1.4a2.3 2.3 0 0 1-.55.85c-.25.25-.5.41-.85.55-.3.1-.7.22-1.4.25-.8.05-1 .05-3 .05s-2.2 0-3-.05c-.7-.03-1.1-.15-1.4-.25a2.3 2.3 0 0 1-.85-.55 2.3 2.3 0 0 1-.55-.85c-.1-.3-.22-.7-.25-1.4-.05-.8-.05-1-.05-3s0-2.2.05-3c.03-.7.15-1.1.25-1.4.14-.35.3-.6.55-.85.25-.25.5-.41.85-.55.3-.1.7-.22 1.4-.25.8-.05 1-.05 3-.05Zm0 2.7a3.7 3.7 0 1 0 0 7.4 3.7 3.7 0 0 0 0-7.4Zm0 6.1a2.4 2.4 0 1 1 0-4.8 2.4 2.4 0 0 1 0 4.8Zm4.7-6.3a.87.87 0 1 1-1.73 0 .87.87 0 0 1 1.73 0Z' },
+  { key: 'x', label: 'X', path: 'M13.4 3h2.3l-5 5.7 5.9 7.8h-4.6l-3.6-4.7-4.1 4.7H1.9l5.4-6.1L1.6 3h4.7l3.3 4.3L13.4 3Zm-.8 11.9h1.3L6 4.3H4.6l8 10.6Z' },
+  { key: 'tiktok', label: 'TikTok', path: 'M14.3 3c.3 1.9 1.4 3.1 3.3 3.2v2.2c-1.1.1-2.1-.2-3.2-.9v4c0 5-5.5 6.6-7.7 3-1.4-2.3-.5-6.4 4-6.6v2.3c-.35.05-.7.14-1 .25-1 .34-1.6 1-1.4 2.1.3 2.1 4.2 2.7 3.9-1.4V3h2.1Z' },
+];
+const active = icons.map((i) => ({ ...i, url: site.social[i.key] || '' }));
+---
+<ul class:list={['flex items-center gap-4', cls]}>
+  {active.map((i) => (
+    <li>
+      {i.url ? (
+        <a href={i.url} aria-label={i.label} class:list={[(boxed || cream) ? box + ' transition-opacity hover:opacity-85' : 'block opacity-90 transition-opacity hover:opacity-100']}>
+          <svg width={size} height={size} viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d={i.path} /></svg>
+        </a>
+      ) : (
+        <span aria-label={i.label} role="img" class:list={[(boxed || cream) ? box : 'block opacity-90']}>
+          <svg width={size} height={size} viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d={i.path} /></svg>
+        </span>
+      )}
+    </li>
+  ))}
+</ul>

@@ -1,0 +1,82 @@
+---
+import Base from '../layouts/Base.astro';
+import PageBanner from '../components/PageBanner.astro';
+import Field from '../components/Field.astro';
+import Btn from '../components/Btn.astro';
+import { site } from '../data/site';
+
+const details = [
+  { label: 'Email', value: site.email, href: `mailto:${site.email}`, icon: 'M3 5h18v14H3V5Zm2 2v.4l7 4.4 7-4.4V7H5Zm14 10V9.9l-7 4.4-7-4.4V17h14Z' },
+  { label: 'Call Now', value: site.phone, href: site.phoneHref, icon: 'M6.6 3h3.2l1.6 4-2 1.4a12 12 0 0 0 5.2 5.2l1.4-2 4 1.6v3.2A2.6 2.6 0 0 1 17.4 19 14.4 14.4 0 0 1 5 6.6 2.6 2.6 0 0 1 6.6 3Z' },
+  { label: 'Office Location', value: site.locationContact, href: null, icon: 'M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5Z' },
+];
+---
+
+<Base
+  title="Contact"
+  description="Get in touch with Engaging Auctions about your upcoming fundraising event, gala, or school auction."
+>
+  <PageBanner title="Contact" image="/images/banner/services.webp" />
+
+  <section class="wrap">
+    <div class="flex flex-col py-[70px] md:py-[60px] lg:py-[70px]">
+      <!-- Intro: centred, max 980px, with the 5px maroon rule -->
+      <div class="mt-[30px] flex justify-center">
+        <p class="max-w-[980px] border-l-[5px] border-maroon pl-[15px] text-center font-sans text-[17px] font-light leading-[1.8] text-ink/85">
+          Looking forward to speaking with you more about your upcoming event.
+          Fill out the form or Schedule a time directly with Elena below
+        </p>
+      </div>
+
+      <!-- Two columns inside a 65%-wide block -->
+      <div class="mx-auto mt-[30px] flex w-full flex-col gap-5 lg:w-[85%] lg:flex-row xl:w-[75%]">
+        <div class="flex flex-col gap-5 px-2.5 pt-2.5 lg:w-[38%]">
+          <div class="flex flex-col gap-[15px] border-l-[5px] border-maroon pl-[15px]">
+            <h2>Let's Talk About Your Event</h2>
+          </div>
+          <Btn href="/consultation/" class="block w-full text-center">Schedule A Call With Elena</Btn>
+
+          <ul class="flex flex-col">
+            {details.map((d) => (
+              <li class="flex items-center gap-4 p-[25px]">
+                <span class="flex h-[60px] w-[60px] shrink-0 items-center justify-center bg-maroon text-white">
+                  <svg width="25" height="25" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d={d.icon} /></svg>
+                </span>
+                <div>
+                  <p class="eyebrow">{d.label}</p>
+                  {d.href
+                    ? <a href={d.href} class="font-display text-[22px] font-bold text-ink hover:text-maroon">{d.value}</a>
+                    : <span class="font-display text-[22px] font-bold text-ink">{d.value}</span>}
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div class="p-[35px] lg:flex-1">
+          <form
+            name="contact"
+            method="POST"
+            data-netlify="true"
+            netlify-honeypot="bot-field"
+            action="/contact/?sent=1"
+            class="flex flex-col gap-5"
+          >
+            <input type="hidden" name="form-name" value="contact" />
+            <p class="hidden"><label>Leave this empty: <input name="bot-field" /></label></p>
+
+            <Field name="name" label="Name" required placeholder="John Doe" />
+            <Field name="organization" label="Organization" placeholder="Organization Name" />
+            <Field name="phone" label="Phone" type="tel" required placeholder="Phone Number" />
+            <Field name="email" label="Email" type="email" required placeholder="abc@gmail.com" />
+            <Field name="message" label="Message" textarea placeholder="How can we help you?" />
+
+            <button type="submit" class="btn self-start bg-maroon px-5 text-cream hover:bg-[#5c1917]">
+              Submit Now
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>

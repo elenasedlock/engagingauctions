@@ -1,0 +1,85 @@
+---
+import { getCollection, render } from 'astro:content';
+
+const testimonials = await Promise.all(
+  (await getCollection('testimonials'))
+    .sort((a, b) => a.data.order - b.data.order)
+    .map(async (e) => ({ ...e, Content: (await render(e)).Content }))
+);
+---
+<!--
+  Matches the Elementor testimonial-carousel settings: 1 slide per view,
+  autoplay 5000ms, 500ms transition, loop, pause on hover and on interaction,
+  dots pagination, no arrows.
+-->
+<div class="tc flex h-[334px] flex-col" data-autoplay="5000">
+  <div class="tc__viewport flex-1 overflow-hidden">
+    <div class="tc__track flex">
+      {testimonials.map(({ data, Content }) => (
+        <figure class="tc__slide w-full shrink-0 bg-white p-[45px]">
+          <blockquote class="font-sans text-[17px] font-light leading-[1.7] text-[#333]">
+            <Content />
+          </blockquote>
+          <figcaption class="mt-6 flex items-center gap-4">
+            {data.logo && (
+              <img src={data.logo} alt={data.org} class="h-20 w-20 object-contain" width="80" height="80" loading="lazy" />
+            )}
+            <div>
+              <p class="font-display text-[25px] font-medium leading-[30px] text-[#2e2e2e]">{data.name}</p>
+              <p class="font-sans text-[16px] font-light text-maroon">
+                {data.role ? `${data.role}, ${data.org}` : data.org}
+              </p>
+            </div>
+          </figcaption>
+        </figure>
+      ))}
+    </div>
+  </div>
+
+  <div class="tc__dots mt-4 flex justify-center gap-2.5">
+    {testimonials.map((_, i) => (
+      <button type="button" class="tc__dot h-[3px] w-[40px] bg-ink/25 transition-all" data-i={i} aria-label={`Go to testimonial ${i + 1}`}></button>
+    ))}
+  </div>
+</div>
+
+<style>
+  .tc__track { transition: transform 500ms ease; }
+  .tc__dot.is-active {
+    background: var(--color-maroon);
+    width: 50px;
+    outline: 2px solid #8a0f0c;
+    outline-offset: 2px;
+  }
+  @media (prefers-reduced-motion: reduce) { .tc__track { transition: none; } }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>('.tc').forEach((root) => {
+    const track = root.querySelector<HTMLElement>('.tc__track')!;
+    const slides = [...root.querySelectorAll<HTMLElement>('.tc__slide')];
+    const dots = [...root.querySelectorAll<HTMLElement>('.tc__dot')];
+    if (slides.length < 2) return;
+
+    const delay = Number(root.dataset.autoplay || 5000);
+    let index = 0;
+    let timer = 0;
+
+    const paint = () => {
+      track.style.transform = `translateX(-${index * 100}%)`;
+      dots.forEach((d, i) => d.classList.toggle('is-active', i === index));
+    };
+    const next = () => { index = (index + 1) % slides.length; paint(); };
+    const start = () => { window.clearInterval(timer); timer = window.setInterval(next, delay); };
+    const stop = () => window.clearInterval(timer);
+
+    dots.forEach((d, i) => d.addEventListener('click', () => { index = i; paint(); start(); }));
+    // pause_on_hover + pause_on_interaction
+    root.addEventListener('mouseenter', stop);
+    root.addEventListener('mouseleave', start);
+    root.addEventListener('focusin', stop);
+
+    paint();
+    start();
+  });
+</script>

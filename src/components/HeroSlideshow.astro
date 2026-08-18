@@ -1,0 +1,65 @@
+---
+interface Props { images: string[] }
+const { images } = Astro.props;
+---
+<!--
+  Reproduces Elementor's background slideshow settings exactly:
+  slide_duration 7000ms, transition_duration 500ms, slide_up transition,
+  ken_burns zoom "in", loop.
+-->
+<div class="hero-ss absolute inset-0 overflow-hidden" data-duration="7000" aria-hidden="true">
+  {images.map((src, i) => (
+    <div class="hero-ss__slide absolute inset-0" data-i={i}>
+      <div class="hero-ss__img h-full w-full bg-cover bg-center" style={`background-image:url(${src})`}></div>
+    </div>
+  ))}
+</div>
+
+<style>
+  .hero-ss__slide {
+    transform: translateY(100%);
+    transition: transform 500ms ease;
+    will-change: transform;
+  }
+  .hero-ss__slide.is-active { transform: translateY(0); }
+  .hero-ss__slide.is-prev { transform: translateY(-100%); }
+
+  /* Ken Burns: slow zoom in while the slide is showing. */
+  .hero-ss__slide.is-active .hero-ss__img { animation: kenBurns 7500ms linear forwards; }
+  @keyframes kenBurns { from { transform: scale(1); } to { transform: scale(1.12); } }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-ss__slide { transition: none; }
+    .hero-ss__slide.is-active .hero-ss__img { animation: none; }
+  }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>('.hero-ss').forEach((root) => {
+    const slides = [...root.querySelectorAll<HTMLElement>('.hero-ss__slide')];
+    if (slides.length < 2) { slides[0]?.classList.add('is-active'); return; }
+
+    let current = 0;
+    slides[0].classList.add('is-active');
+
+    const advance = () => {
+      const next = (current + 1) % slides.length;
+      slides[current].classList.remove('is-active');
+      slides[current].classList.add('is-prev');
+      slides[next].classList.remove('is-prev');
+      slides[next].classList.add('is-active');
+      const done = current;
+      window.setTimeout(() => slides[done].classList.remove('is-prev'), 500);
+      current = next;
+    };
+
+    // background_slideshow_slide_duration: 7000ms on the homepage hero,
+    // 5000ms on the inner-page banners.
+    const duration = Number(root.dataset.duration || 7000);
+    let timer = window.setInterval(advance, duration);
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) { window.clearInterval(timer); }
+      else { timer = window.setInterval(advance, duration); }
+    });
+  });
+</script>

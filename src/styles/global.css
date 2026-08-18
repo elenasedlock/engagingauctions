@@ -1,0 +1,91 @@
+@import "tailwindcss";
+
+/* All values measured from the live site's computed styles. See docs/design-spec.md */
+@theme {
+  --color-ink: #121212;
+  --color-maroon: #451211;
+  --color-cream: #E4E3D2;
+  --color-tint4: rgba(201, 4, 0, 0.04);
+  --color-tint8: rgba(201, 4, 0, 0.08);
+  --color-white16: rgba(255, 255, 255, 0.16);
+
+  --font-display: "Cormorant Garamond", Georgia, serif;
+  --font-sans: "Poppins", ui-sans-serif, system-ui, sans-serif;
+}
+
+@layer base {
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font-sans);
+    color: var(--color-ink);
+    background: #fff;
+  }
+
+  /*
+    Type scale from the Elementor kit's global typography:
+      h1  Cormorant Garamond 80 / 65 / 50, weight 500, line-height 1.1em
+      h2  Cormorant Garamond 50 / 40 / 26, weight 500, line-height 1.2em
+      h3  Cormorant Garamond 30 / 28 / 22, weight 500, line-height 1.2em
+      body Poppins 17px weight 300
+    All headings capitalize. In @layer base so utilities can override.
+  */
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    text-transform: capitalize;
+  }
+
+  h1 { font-size: 80px; line-height: 1.1em; }
+  h2 { font-size: 50px; line-height: 1.2em; }
+  h3 { font-size: 30px; line-height: 1.2em; }
+
+  @media (max-width: 1024px) {
+    h1 { font-size: 65px; }
+    h2 { font-size: 40px; }
+    h3 { font-size: 28px; }
+  }
+  @media (max-width: 767px) {
+    h1 { font-size: 50px; }
+    h2 { font-size: 26px; }
+    h3 { font-size: 22px; }
+  }
+}
+
+
+.eyebrow {
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 18px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-weight: 400;
+  color: var(--color-maroon);
+}
+.eyebrow-light { color: #fff; }
+
+/* Container: 1400px max, 20px gutter, matching Elementor's boxed containers. */
+.wrap { width: 100%; max-width: 1400px; margin-inline: auto; padding-inline: 20px; }
+
+/* Buttons: square, 20px padding, uppercase Poppins 15/500 with 1px tracking. */
+.btn {
+  display: inline-block;
+  text-align: center;
+  padding: 20px;
+  border: 1px solid var(--color-maroon);
+  font-family: var(--font-sans);
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  line-height: 1;
+  transition: background-color .2s, color .2s;
+}
+.btn-primary { background: var(--color-maroon); color: #fff; }
+.btn-primary:hover { background: #5c1917; }
+.btn-secondary { background: var(--color-cream); color: var(--color-maroon); }
+.btn-secondary:hover { background: #eeedde; }
+
+/* Global text style: Poppins 17px, weight 300. */
+/* Live: Poppins 17px / 300 / 25.5px, colour #2E2E2E. */
+.body-copy { font-size: 17px; font-weight: 300; line-height: 25.5px; color: #2E2E2E; }

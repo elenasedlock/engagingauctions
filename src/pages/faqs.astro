@@ -1,0 +1,46 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import PageBanner from '../components/PageBanner.astro';
+
+const faqs = await Promise.all(
+  (await getCollection('faqs'))
+    .sort((a, b) => a.data.order - b.data.order)
+    .map(async (e) => ({ ...e, Content: (await render(e)).Content }))
+);
+
+// Live page splits the questions across two accordion widgets: 3 then 2.
+const columns = [faqs.slice(0, 3), faqs.slice(3)];
+---
+
+<Base
+  title="FAQ's"
+  description="Answers to common questions about booking a benefit auctioneer for nonprofit galas, school auctions, and fundraising events."
+>
+  <PageBanner title="FAQ's" image="/images/hero/hero-1.webp" />
+
+  <section class="wrap">
+    <div class="flex flex-col gap-5 py-[70px] md:py-[60px] lg:py-[70px]">
+      <div class="flex flex-col gap-5 text-center">
+        <p class="eyebrow">Frequently Asked Questions</p>
+        <h2>Answers To Common Auction Questions</h2>
+      </div>
+
+      <div class="mt-6 grid gap-x-5 md:grid-cols-2">
+        {columns.map((col) => (
+          <div>
+            {col.map(({ data, Content }) => (
+              <details class="group mb-2.5">
+                <summary class="flex cursor-pointer list-none items-center justify-between gap-4 bg-maroon px-[15px] py-3 font-sans text-[16px] leading-[24px] text-white">
+                  <span>Q: {data.question}</span>
+                  <span class="shrink-0 transition-transform group-open:rotate-45" aria-hidden="true">+</span>
+                </summary>
+                <div class="body-copy p-5 text-ink/80"><Content /></div>
+              </details>
+            ))}
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+</Base>

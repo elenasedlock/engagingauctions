@@ -1,0 +1,9 @@
+---
+interface Props { eyebrow?: string; title: string; light?: boolean; class?: string }
+const { eyebrow, title, light = false, class: cls = '' } = Astro.props;
+---
+<!-- Live site wraps eyebrow + H2 in a 5px maroon left rule with 15px padding. -->
+<div class:list={['flex flex-col gap-5 border-l-[5px] border-maroon pl-[15px]', cls]}>
+  {eyebrow && <p class:list={['eyebrow', light && 'eyebrow-light']}>{eyebrow}</p>}
+  <h2 class:list={[light && 'text-white']}>{title}</h2>
+</div>

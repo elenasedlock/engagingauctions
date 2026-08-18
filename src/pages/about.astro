@@ -1,0 +1,84 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import PageBanner from '../components/PageBanner.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import CTASection from '../components/CTASection.astro';
+import Btn from '../components/Btn.astro';
+import ImpactPanel from '../components/ImpactPanel.astro';
+import { site } from '../data/site';
+
+const team = await Promise.all(
+  (await getCollection('team'))
+    .sort((a, b) => a.data.order - b.data.order)
+    .map(async (e) => ({ ...e, Content: (await render(e)).Content }))
+);
+---
+
+<Base
+  title="About"
+  description="Engaging Auctions was founded with a simple belief: fundraising works best when organizations feel supported, prepared, and genuinely understood."
+>
+  <PageBanner title="About" />
+
+  <!-- About — padding 70/0; image 580x680 left, copy right; impact row below -->
+  <section class="wrap">
+    <div class="flex flex-col gap-5 py-[70px]">
+      <div class="grid gap-5 px-2.5 py-5 lg:grid-cols-2">
+        <img
+          src="/images/team/elena-walking.jpg"
+          alt="Elena Sedlock"
+          class="h-[680px] w-full object-cover"
+          width="580" height="680"
+        />
+        <div class="flex flex-col gap-5">
+          <SectionHeading eyebrow="About Engaging Auctions" title="Experienced Auction Professionals You Can Trust" />
+          <p class="body-copy text-ink/80">
+            Engaging Auctions was founded with a simple belief: fundraising works
+            best when organizations feel supported, prepared, and genuinely understood.
+          </p>
+          <p class="body-copy text-ink/80">
+            Elena Sedlock brings a thoughtful, partner-driven approach to every event
+            she leads. Known for her professionalism, warmth, and ability to connect
+            with diverse audiences, Elena works closely with organizations before and
+            during their event to ensure every moment aligns with their mission and
+            fundraising goals.
+          </p>
+          <p class="body-copy text-ink/80">
+            Her approach blends storytelling, facts, and real-time audience
+            engagement—creating an atmosphere where donors feel inspired to give and
+            confident in the cause they are supporting. Elena takes pride in never
+            losing sight of an organization's purpose, using her experience and
+            perseverance to help teams raise the funds they need while delivering an
+            event guests will remember.
+          </p>
+          <div><Btn href="/consultation/">Get Consultation To Contact Our Team</Btn></div>
+        </div>
+      </div>
+
+      <div class="p-2.5"><ImpactPanel iconSize={26} /></div>
+    </div>
+  </section>
+
+  <!-- Team — bg tint4, padding 70/0, one row per person, image height follows the photo -->
+  <section class="bg-tint4">
+    <div class="wrap">
+      <div class="flex flex-col gap-5 py-[70px]">
+        <SectionHeading eyebrow="Team" title="Meet Our Professionals" class="!gap-[15px]" />
+
+        {team.map(({ data, Content }) => (
+          <div class="grid items-center gap-5 p-2.5 lg:grid-cols-2">
+            <img src={data.photo} alt={data.name} class="w-full object-cover" style={`height:${data.photoHeight}px`} width="586" height={data.photoHeight} loading="lazy" />
+            <div class="flex flex-col gap-5">
+              <h3 class="text-[30px] leading-[36px]">{data.name}</h3>
+              <div class="body-copy text-ink/80"><Content /></div>
+              <div><Btn href="/consultation/" class="!p-2.5">Contact Me</Btn></div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <CTASection />
+</Base>

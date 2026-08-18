@@ -1,0 +1,30 @@
+---
+import Base from '../layouts/Base.astro';
+import PageBanner from '../components/PageBanner.astro';
+import { site } from '../data/site';
+---
+
+<Base
+  title="Consultation"
+  description="Book a 30-minute consultation with Elena Sedlock to talk through your fundraising event."
+>
+  <PageBanner title="Consultation" image="/images/banner/services.webp" />
+
+  <section class="wrap">
+    <div class="px-2.5 py-[25px] md:py-[60px] lg:py-[25px]">
+      <!-- Same Calendly booking link and 660px inline widget the live page uses. -->
+      <div
+        class="calendly-inline-widget"
+        data-url={`${site.calendly}?hide_gdpr_banner=1`}
+        style="min-width:320px;height:660px;"
+      ></div>
+      <script is:inline async src="https://assets.calendly.com/assets/external/widget.js"></script>
+
+      <noscript>
+        <p class="body-copy text-center">
+          <a href={site.calendly} class="text-maroon underline">Open the booking calendar</a>
+        </p>
+      </noscript>
+    </div>
+  </section>
+</Base>

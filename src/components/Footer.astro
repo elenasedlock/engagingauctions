@@ -1,0 +1,59 @@
+---
+import { site } from '../data/site';
+import SocialIcons from './SocialIcons.astro';
+
+const quickLinks = [...site.nav.slice(0, 5), { label: "FAQ's", href: '/faqs/' }, { label: 'Contact', href: '/contact/' }];
+
+// Contact rows: 20px icon on a maroon tile, Cormorant Garamond 22px/700 label.
+const contact = [
+  { label: site.phone, href: site.phoneHref, icon: 'M6.6 3h3.2l1.6 4-2 1.4a12 12 0 0 0 5.2 5.2l1.4-2 4 1.6v3.2A2.6 2.6 0 0 1 17.4 19 14.4 14.4 0 0 1 5 6.6 2.6 2.6 0 0 1 6.6 3Z' },
+  { label: site.email, href: `mailto:${site.email}`, icon: 'M3 5h18v14H3V5Zm2 2v.4l7 4.4 7-4.4V7H5Zm14 10V9.9l-7 4.4-7-4.4V17h14Z' },
+  { label: site.locationFooter, href: '#', icon: 'M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5Z' },
+];
+---
+<footer class="bg-ink text-white">
+  <div class="mx-auto flex w-full max-w-[1400px] flex-col gap-2.5 px-2.5 py-2.5">
+    <div class="grid min-h-[363px] gap-5 px-2.5 pb-2.5 pt-[50px] md:grid-cols-3">
+      <div>
+        <a href="/"><img src="/images/brand/logo-full.png" alt={site.name} class="w-[165px]" width="165" height="115" /></a>
+        <p class="mt-6 max-w-md text-[17px] font-light leading-[25.5px] text-white">{site.footerBlurb}</p>
+      </div>
+
+      <div class="md:pl-8">
+        <h3 class="text-white">Quick Links</h3>
+        <ul class="mt-5">
+          {quickLinks.map((l) => (
+            <li class="flex h-[32px] items-center">
+              <a href={l.href} class="text-[17px] font-light leading-[25.5px] text-white transition-colors hover:text-white">{l.label}</a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="text-white">Contact Info</h3>
+        <ul class="mt-5 flex flex-col gap-4">
+          {contact.map((c) => (
+            <li class="flex items-center gap-2.5">
+              <span class="flex h-[48px] w-[48px] shrink-0 items-center justify-center bg-maroon text-[#D4B46C]">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d={c.icon} /></svg>
+              </span>
+              {c.href ? (
+                <a href={c.href} class="font-display text-[22px] font-bold leading-[26.4px] text-white transition-opacity hover:opacity-85">{c.label}</a>
+              ) : (
+                <span class="font-display text-[22px] font-bold leading-[26.4px] text-white">{c.label}</span>
+              )}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+
+    <div class="h-[3px] bg-white/15"></div>
+
+    <div class="flex min-h-[60px] flex-col items-center justify-between gap-4 px-2.5 sm:flex-row">
+      <p class="text-[17px] font-light leading-[25.5px] text-white">{site.copyright}</p>
+      <SocialIcons class="gap-[10px]" size={15} boxed />
+    </div>
+  </div>
+</footer>

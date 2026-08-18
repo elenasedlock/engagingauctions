@@ -1,0 +1,57 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import PageBanner from '../components/PageBanner.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import CTASection from '../components/CTASection.astro';
+
+const testimonials = await Promise.all(
+  (await getCollection('testimonials'))
+    .sort((a, b) => a.data.order - b.data.order)
+    .map(async (e) => ({ ...e, Content: (await render(e)).Content }))
+);
+---
+
+<Base
+  title="Testimonials"
+  description="What event hosts and nonprofit organizations say about working with Elena Sedlock and Engaging Auctions."
+>
+  <PageBanner title="Testimonials" image="/images/banner/services.webp" />
+
+  <!--
+    Live layout: heading row, then cards at 49% / 49% / 100% width, each with
+    2em padding, quote text and an image-box (140px logo + name + role).
+  -->
+  <section class="wrap">
+    <div class="flex flex-wrap gap-5 py-[70px] md:py-[60px] lg:py-[70px]">
+      <div class="w-full">
+        <SectionHeading eyebrow="Client Experiences" title="Testimonials Event Hosts & Organizations" class="!gap-[15px]" />
+      </div>
+
+      {testimonials.map(({ data, Content }, i) => (
+        <figure
+          class:list={[
+            'flex flex-col gap-6 p-[2em]',
+            i < 2 ? 'w-full lg:w-[49%]' : 'w-full',
+            i === 2 && 'bg-tint4',
+          ]}
+        >
+          <blockquote class="text-[17px] font-light leading-[1.7] text-[#333]"><Content /></blockquote>
+          <figcaption class="flex items-center gap-5">
+            {data.logo && (
+              <img src={data.logo} alt={data.org} class="h-[140px] w-[140px] shrink-0 object-contain" width="140" height="140" loading="lazy" />
+            )}
+            <div>
+              <p class="font-display text-[22px] font-semibold leading-tight text-[#2e2e2e]">{data.name}</p>
+              <p class="mt-1 font-sans text-[16px] font-light text-maroon">
+                {data.role ? `${data.role}, ${data.org}` : data.org}
+              </p>
+            </div>
+          </figcaption>
+        </figure>
+      ))}
+    </div>
+  </section>
+
+  <CTASection pad={100} />
+</Base>

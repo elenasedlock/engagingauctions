@@ -1,0 +1,99 @@
+---
+import { site } from '../data/site';
+import SocialIcons from './SocialIcons.astro';
+const path = Astro.url.pathname;
+---
+<!--
+  Live header is transparent over the hero/banner with a white logo and white
+  nav, and only paints a solid background once the page is scrolled (Elementor
+  sticky header, transition: background .3s).
+-->
+<header
+  id="site-header"
+  class="site-header absolute inset-x-0 top-0 z-[999] transition-[background-color,box-shadow] duration-300"
+>
+  <div class="mx-auto flex w-full max-w-[1400px] items-center gap-5 px-2.5 py-2.5">
+    <div class="flex w-[302px] shrink-0 items-center p-1.5">
+      <a href="/">
+        <img
+          src="/images/brand/logo.webp"
+          alt={site.name}
+          class="site-logo h-[87px] w-[125px] object-contain"
+          width="125" height="87"
+        />
+      </a>
+    </div>
+
+    <nav aria-label="Primary" class="hidden flex-1 items-center justify-center gap-[38px] p-2.5 lg:flex">
+      {site.nav.map((item) => (
+        <a
+          href={item.href}
+          aria-current={path === item.href ? 'page' : undefined}
+          class:list={['site-navlink text-[17px] font-normal leading-[20.4px] transition-colors', path === item.href && 'is-current']}
+        >
+          {item.label}
+        </a>
+      ))}
+    </nav>
+
+    <div class="ml-auto hidden items-center justify-end gap-[10px] p-2.5 lg:flex">
+      <SocialIcons size={15} boxed />
+    </div>
+
+    <details class="relative ml-auto lg:hidden">
+      <summary class="site-navlink cursor-pointer list-none p-2" aria-label="Menu">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75">
+          <path d="M3 6h18M3 12h18M3 18h18" />
+        </svg>
+      </summary>
+      <div class="absolute right-0 top-full z-50 w-56 border border-black/10 bg-white p-4 shadow-xl">
+        {site.nav.map((item) => (
+          <a href={item.href} class="block py-2 text-[15px] text-ink hover:text-maroon">{item.label}</a>
+        ))}
+        <a href="/faqs/" class="block py-2 text-[15px] text-ink hover:text-maroon">FAQ's</a>
+        <SocialIcons class="mt-3" size={15} boxed />
+      </div>
+    </details>
+  </div>
+</header>
+
+<style>
+  /*
+    Reproduces the live header's page custom CSS:
+
+      .logo img { filter: brightness(0) ... invert(100%) ...; transition: .5s all }
+      #main_header.elementor-sticky--active { background: #FFF; border-bottom: 1px solid #ececec }
+      #main_header.elementor-sticky--active .logo img { filter: none; width: 90px }
+      #main_header.elementor-sticky--active .header_menu a { color: #121212 }
+      #main_header.elementor-sticky--active .header_menu a:hover { color: #451211 }
+  */
+  .site-header { background-color: transparent; }
+
+  .site-logo {
+    filter: brightness(0) saturate(100%) invert(100%) sepia(100%) grayscale(100%);
+    transition: 0.5s all;
+  }
+
+  .site-navlink { color: #fff; }
+  .site-navlink:hover,
+  .site-navlink.is-current { color: #D4B46C; }
+
+  .site-header.is-stuck {
+    position: fixed;
+    background-color: #fff;
+    border-bottom: 1px solid #ececec;
+  }
+  .site-header.is-stuck .site-logo { filter: none; width: 90px; }
+  .site-header.is-stuck .site-navlink { color: var(--color-primary, #121212); }
+  .site-header.is-stuck .site-navlink:hover,
+  .site-header.is-stuck .site-navlink.is-current { color: var(--color-maroon); }
+</style>
+
+<script>
+  const header = document.getElementById('site-header');
+  if (header) {
+    const onScroll = () => header.classList.toggle('is-stuck', window.scrollY > 120);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+  }
+</script>

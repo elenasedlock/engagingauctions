@@ -1,0 +1,22 @@
+---
+/**
+ * Elementor shape_divider_bottom: "triangle", height 70px, width 100%,
+ * negative: yes. Renders as a V-notch: the section below rises at the left and
+ * right edges and dips to a point at the centre.
+ */
+interface Props { height?: number; color?: string }
+const { height = 70, color = '#fff' } = Astro.props;
+---
+<div
+  class="pointer-events-none absolute inset-x-0 bottom-0 z-[1] w-full overflow-hidden"
+  style={`height:${height}px`}
+  aria-hidden="true"
+>
+  <svg class="block h-full w-full" viewBox="0 0 100 70" preserveAspectRatio="none">
+    <path d="M0,0 L50,70 L100,0 L100,70 L0,70 Z" fill={color} />
+  </svg>
+</div>
+<style>
+  @media (max-width: 1024px) { div[style*="height:70px"] { height: 40px !important; } }
+  @media (max-width: 640px)  { div[style*="height:70px"] { height: 25px !important; } }
+</style>

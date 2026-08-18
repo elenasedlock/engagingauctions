@@ -1,0 +1,13 @@
+---
+import { site } from '../data/site';
+import Icon from './Icon.astro';
+interface Props { iconSize?: number }
+const { iconSize = 24 } = Astro.props;
+---
+<!-- Elementor: container padding 25, gap 10, stacked icon (fas fa-file-invoice-dollar), h4 centred. -->
+<div class="flex flex-col items-center gap-2.5 bg-tint8 p-[25px] text-center">
+  <Icon name="file-invoice-dollar" size={iconSize} view="stacked" box={60} />
+  <p class="font-sans text-[15px] font-medium uppercase leading-[18px] tracking-[1px] text-ink">
+    {site.raised} Raised For Organizations &amp; Causes
+  </p>
+</div>

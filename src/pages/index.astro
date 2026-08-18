@@ -1,0 +1,183 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import Btn from '../components/Btn.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import CTASection from '../components/CTASection.astro';
+import ShapeDivider from '../components/ShapeDivider.astro';
+import ImpactPanel from '../components/ImpactPanel.astro';
+import Icon from '../components/Icon.astro';
+import HeroSlideshow from '../components/HeroSlideshow.astro';
+import TestimonialCarousel from '../components/TestimonialCarousel.astro';
+import SocialIcons from '../components/SocialIcons.astro';
+import { site } from '../data/site';
+
+const services = (await getCollection('services')).sort((a, b) => a.data.order - b.data.order);
+const heroSlides = ['/images/hero/hero-1.webp', '/images/hero/hero-2.jpg', '/images/hero/hero-3.webp'];
+
+const whyChoose = [
+  { icon: 'microphone', title: 'Engaging Auctioneers', body: 'We don’t just call bids—we energize the room. Our auctions are designed to keep guests involved, entertained, and emotionally invested from start to finish.' },
+  { icon: 'flash', title: 'Proven Engagement Strategies', body: 'Every event is approached strategically. From pacing to storytelling to audience interaction, we use proven techniques that motivate participation and maximize fundraising momentum.' },
+  { icon: 'settings', title: 'Seamless Auction Execution', body: 'Preparation matters. We work behind the scenes to ensure your auction runs smoothly, stays on schedule, and delivers a polished experience for hosts and guests alike.' },
+  { icon: 'users', title: 'Client-Focused Approach', body: 'Your mission comes first. We take the time to understand your organization’s goals and tailor our approach to support them—before, during, and after your event.' },
+];
+---
+
+<Base
+  title={site.name}
+  description="Professional auction services that engage audiences, inspire generosity, and help organizations raise more money."
+>
+  <!-- 1. Hero — background slideshow, min-height 792px, padding 140/80 -->
+  <section class="relative min-h-[110vh] overflow-hidden bg-ink">
+    <HeroSlideshow images={heroSlides} />
+    <div class="absolute inset-0 bg-black/45" aria-hidden="true"></div>
+    <ShapeDivider height={70} />
+
+    <div class="wrap relative">
+      <div class="h-[70px]" aria-hidden="true"></div>
+      <div class="px-2.5 pb-20 pt-[140px]">
+        <h1 class="max-w-[1220px] border-l-[5px] border-maroon pl-[15px] text-white">
+          Transforming Fundraising Events Into High-Energy <b class="font-bold">Auction</b> Experiences
+        </h1>
+        <p class="mt-6 w-full text-[17px] font-light leading-[25.5px] text-white lg:w-[60%]">
+          Professional auction services that engage audiences, inspire generosity,
+          and help organizations raise more money—without losing sight of their mission.
+        </p>
+        <div class="mt-9 flex flex-wrap gap-4">
+          <Btn href="/contact/">Contact Our Team</Btn>
+          <Btn href="/videos/" variant="secondary">Watch Our Auctions In Action</Btn>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. About — two 610px columns, padding 70/0 -->
+  <section class="wrap">
+    <div class="grid items-start gap-5 py-[70px] lg:grid-cols-2 lg:[&>*]:h-[640px]">
+      <div class="p-2.5">
+        <img src="/images/team/elena-home.jpg" alt="Elena Sedlock" class="h-[635px] w-full object-cover object-top" width="600" height="635" />
+        <div class="relative z-10 mx-auto -mt-[185px] w-[90%] bg-maroon p-[25px] text-center">
+          <h3 class="text-[40px] leading-[48px] text-white">Elena Sedlock</h3>
+          <SocialIcons class="mt-4 justify-center gap-[10px]" size={15} cream />
+        </div>
+      </div>
+
+      <div class="flex flex-col gap-5 p-2.5">
+        <SectionHeading eyebrow="About Engaging Auctions" title="Experienced Auction Professionals You Can Trust" />
+        <p class="body-copy text-ink/80">
+          At Engaging Auctions, we believe a high-energy mission driven consulting
+          that motivate donors, elevate events, and drive real result.
+        </p>
+        <p class="body-copy text-ink/80">
+          Led by professional auctioneer Elena Sedlock, we partner with nonprofits,
+          schools, and fundraising organizations to deliver engaging, high-energy
+          auction experiences that motivate donors, elevate events, and drive real results.
+        </p>
+        <h3 class="text-[28px] leading-[33.6px]">IMPACT</h3>
+        <ImpactPanel />
+        <div class="mt-2 flex flex-wrap gap-4">
+          <Btn href="/about/">Learn More About Us</Btn>
+          <Btn href="/request-a-booking/">Book Your Auction</Btn>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. Why Choose — photo background over #121212, padding 100/0, gap 30 -->
+  <section class="relative bg-ink">
+    <div class="absolute inset-0 bg-fixed bg-cover bg-center" style="background-image:url(/images/banner/why-bg.webp)" aria-hidden="true"></div>
+    <div class="absolute inset-0 bg-ink/85" aria-hidden="true"></div>
+    <div class="wrap relative">
+      <div class="flex flex-col gap-[30px] py-[100px]">
+        <SectionHeading eyebrow="Why Choose Engaging Auctions" title="More Than An Auction — A Complete Experience" light />
+        <div class="grid gap-5 p-2.5 md:grid-cols-2">
+          {whyChoose.map((c) => (
+            <div class="flex min-h-[335px] flex-col items-center gap-5 bg-white p-10 text-center">
+              <Icon name={c.icon as any} size={35} view="framed" box={70} />
+              <h3 class="text-center">{c.title}</h3>
+              <p class="body-copy text-center text-ink/80">{c.body}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. Services — padding 70/0; heading left, button right; three 587px cards -->
+  <section class="wrap">
+    <div class="flex flex-col gap-5 p-2.5 py-[70px]">
+      <div class="flex flex-col items-start justify-between gap-5 lg:flex-row">
+        <div class="flex flex-col gap-[15px] border-l-[5px] border-maroon pl-[15px] lg:w-[71%]">
+          <p class="eyebrow">Our Auction Services</p>
+          <h2>Complete Auction Solutions For Any Event</h2>
+        </div>
+        <div class="p-2.5 lg:w-[328px] lg:text-right">
+          <Btn href="/services/">View All Services</Btn>
+        </div>
+      </div>
+
+      <div class="grid gap-5 md:grid-cols-3">
+        {services.map((s, i) => (
+          <article class="flex min-h-[587px] flex-col gap-5 bg-tint4 p-[25px] text-center">
+            {s.data.image && (
+              <img src={s.data.image} alt={s.data.title} class="h-[260px] w-full object-cover" width="337" height="260" loading="lazy" />
+            )}
+            <Icon name={(["user","heart-multiple","play"][i] ?? "user") as any} size={25} view="stacked" box={51} class="ml-auto" />
+            <h3 class="text-center">{s.data.title}</h3>
+            <p class="body-copy text-center text-ink/80">{s.data.blurb}</p>
+            <a
+              href="/services/"
+              class="mx-auto mt-auto inline-flex items-center gap-[5px] border border-maroon bg-maroon px-[15px] pb-[7px] pt-[8px] font-sans text-[14px] font-normal leading-[14px] tracking-[1px] text-white"
+            >
+              More Details
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                <path d="M4.5 11.5 11.5 4.5M5.5 4.5h6v6" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </a>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. Auctions in Action — bg tint4, padding 70/0; text left, portrait Short right -->
+  <section class="bg-tint4">
+    <div class="wrap">
+      <div class="p-2.5 py-[70px]">
+        <div class="p-2.5">
+        <div class="flex flex-col gap-5 py-2.5 lg:flex-row">
+          <div class="flex flex-col gap-5 p-2.5 lg:flex-1">
+            <SectionHeading eyebrow="Auctions In Action" title="See The Energy. Feel The Excitement." />
+            <div><Btn href="/consultation/">Book Your Auction</Btn></div>
+          </div>
+          <div class="p-2.5 lg:w-[45%]">
+            <div class="h-[924px] w-full bg-ink">
+              <iframe
+                src="https://www.youtube-nocookie.com/embed/sPCloLJF3-s?rel=0"
+                title="Auctions in Action"
+                loading="lazy"
+                allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen
+                class="h-full w-full"
+              ></iframe>
+            </div>
+          </div>
+        </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. Client Experiences — carousel, padding 70/0 -->
+  <section class="wrap">
+    <div class="flex flex-col gap-5 py-[70px] p-2.5">
+      <SectionHeading eyebrow="Client Experiences" title="Testimonials Event Hosts & Organizations" />
+      <div class="mt-4">
+        <TestimonialCarousel />
+      </div>
+    </div>
+  </section>
+
+  <CTASection single />
+</Base>
+

@@ -1,0 +1,35 @@
+---
+import Btn from './Btn.astro';
+interface Props {
+  /** Only the homepage shows a single button; inner pages show two. */
+  single?: boolean;
+  /** Section vertical padding: 70 on most pages, 100 on /testimonials/ and /videos/. */
+  pad?: 70 | 100;
+}
+const { single = false, pad = 70 } = Astro.props;
+---
+<!--
+  "Ready to Elevate Your Event?" band. From the Elementor export: photo
+  background (background-image-last-page-.jpeg, cover) over #121212, column gap
+  30, columns 593 + 617, right panel with 30px padding.
+-->
+<section class="relative bg-ink" style={`padding-top:${pad}px;padding-bottom:${pad}px`}>
+  <div class="absolute inset-0 bg-fixed bg-cover bg-top" style="background-image:url(/images/banner/cta-bg.jpeg)" aria-hidden="true"></div>
+  <div class="absolute inset-0 bg-ink/80" aria-hidden="true"></div>
+
+  <div class="wrap relative">
+    <div class="grid gap-[30px] lg:grid-cols-[593px_617px]">
+      <div class="hidden lg:block"></div>
+      <div class="flex flex-col gap-5 bg-white16 p-[30px]">
+        <p class="eyebrow eyebrow-light">Ready To Elevate Your Event?</p>
+        <h2 class="text-[40px] leading-[48px] text-white">
+          Let’s Create An Auction Experience Your Guests Will Remember—And Your Organization Will Benefit From.
+        </h2>
+        <div class="flex flex-wrap gap-4">
+          {!single && <Btn href="/consultation/">Book Your Auction</Btn>}
+          <Btn href="/contact/" variant={single ? 'primary' : 'secondary'}>Contact Our Team</Btn>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

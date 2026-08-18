@@ -1,0 +1,14 @@
+---
+interface Props { title: string; crumb?: string }
+const { title, crumb } = Astro.props;
+---
+<section class="border-b border-line bg-mist">
+  <div class="mx-auto max-w-6xl px-5 py-14 text-center">
+    <h1 class="text-4xl sm:text-5xl">{title}</h1>
+    <nav aria-label="Breadcrumb" class="mt-3 text-sm text-ink/55">
+      <a href="/" class="hover:text-brick">Home</a>
+      <span class="mx-2">/</span>
+      <span>{crumb ?? title}</span>
+    </nav>
+  </div>
+</section>

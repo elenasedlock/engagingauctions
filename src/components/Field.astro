@@ -1,0 +1,24 @@
+---
+interface Props {
+  name: string;
+  label: string;
+  type?: string;
+  required?: boolean;
+  placeholder?: string;
+  textarea?: boolean;
+}
+const { name, label, type = 'text', required = false, placeholder, textarea = false } = Astro.props;
+// Live inputs: white, 1px rgba(201,4,0,.08) border, square, 7px 20px, 17px text.
+const cls =
+  'mt-2 w-full border border-tint8 bg-white px-5 py-[7px] font-sans text-[17px] text-[#1c1c1c] outline-none focus:border-maroon';
+---
+<label class="block">
+  <span class="font-sans text-[15px] uppercase tracking-[1px] text-ink/80">
+    {label}{required && <span class="text-maroon"> *</span>}
+  </span>
+  {textarea ? (
+    <textarea name={name} rows="5" required={required} placeholder={placeholder} class={cls}></textarea>
+  ) : (
+    <input type={type} name={name} required={required} placeholder={placeholder} class={cls} />
+  )}
+</label>

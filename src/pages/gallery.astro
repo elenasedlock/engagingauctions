@@ -1,0 +1,80 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import PageBanner from '../components/PageBanner.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import VideoEmbed from '../components/VideoEmbed.astro';
+import Btn from '../components/Btn.astro';
+
+const photos = (await getCollection('gallery')).sort((a, b) => a.data.order - b.data.order);
+const videos = (await getCollection('videos')).sort((a, b) => a.data.order - b.data.order);
+
+// The live gallery shows three photos and reveals the rest via "Load More".
+const VISIBLE = 3;
+---
+
+<Base
+  title="Gallery"
+  description="Photos and video highlights from benefit auctions and fundraising galas hosted by Engaging Auctions."
+>
+  <PageBanner title="Gallery" image="/images/banner/services.webp" />
+
+  <!-- Videos — bg rgba(201,4,0,.04) -->
+  <section class="bg-tint4">
+    <div class="wrap">
+      <div class="flex flex-col gap-5 py-[70px] md:py-[60px] lg:py-[70px]">
+        <div class="flex flex-col items-start justify-between gap-5 lg:flex-row">
+          <SectionHeading eyebrow="Highlights" title="Videos Moments From Our Auctions" class="!gap-[15px] lg:w-[70%]" />
+          <div class="lg:text-right"><Btn href="/consultation/">Event Consultation</Btn></div>
+        </div>
+        <div class="mt-4 flex flex-col gap-5 lg:flex-row">
+          {videos.filter((v) => !v.data.short).map((v) => (
+            <div class="h-[600px] p-2.5 max-[576px]:h-[400px] lg:w-[32%]"><VideoEmbed id={v.data.youtubeId} title={v.data.title} fill /></div>
+          ))}
+        </div>
+        <div class="mt-2 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          {videos.filter((v) => v.data.short).map((v) => (
+            <VideoEmbed id={v.data.youtubeId} title={v.data.title} short />
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Photos — Load More reveals the rest, as on the live gallery -->
+  <section class="wrap">
+    <div class="flex flex-col gap-5 py-[70px] md:py-[60px] lg:py-[70px]">
+      <div class="flex flex-col items-start justify-between gap-5 lg:flex-row">
+        <SectionHeading eyebrow="Highlights" title="Photos Moments From Our Auctions" class="!gap-[15px] lg:w-[70%]" />
+        <div class="lg:text-right"><Btn href="/consultation/">Event Consultation</Btn></div>
+      </div>
+
+      <div class="gallery mt-4" data-visible={VISIBLE}>
+        <div class="grid gap-5 md:grid-cols-3">
+          {photos.map((p, i) => (
+            <img
+              src={p.data.image}
+              alt={p.data.alt}
+              class:list={['gallery__item h-[400px] w-full object-cover p-2.5 max-[576px]:h-[300px]', i >= VISIBLE && 'hidden']}
+              width="400" height="300" loading="lazy" />
+          ))}
+        </div>
+        {photos.length > VISIBLE && (
+          <div class="mt-8">
+            <button type="button" class="gallery__more btn btn-primary">Load More</button>
+          </div>
+        )}
+      </div>
+    </div>
+  </section>
+</Base>
+
+<script>
+  document.querySelectorAll<HTMLElement>('.gallery').forEach((root) => {
+    const btn = root.querySelector<HTMLButtonElement>('.gallery__more');
+    btn?.addEventListener('click', () => {
+      root.querySelectorAll('.gallery__item.hidden').forEach((el) => el.classList.remove('hidden'));
+      btn.remove();
+    });
+  });
+</script>
