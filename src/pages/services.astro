@@ -27,10 +27,10 @@ const steps = await Promise.all(
         <SectionHeading eyebrow="Our Auction Process" title="A Clear, Organized Approach To Successful Auctions" />
         <ol class="grid gap-5 md:grid-cols-3">
           {steps.map(({ data, Content }) => (
-            <li class="flex flex-col gap-5 bg-maroon p-[25px] text-white">
+            <li class="flex h-[330px] flex-col gap-5 bg-maroon p-[25px] text-white">
               <Icon name={({chat:"chat",check:"check-square",play:"play"}[data.icon] ?? "chat") as any} size={35} view="stacked" box={70} />
               <h3 class="text-[28px] leading-[33.6px] text-white">Step {data.step}: {data.title}</h3>
-              <div class="text-[16px] leading-[24px] text-white"><Content /></div>
+              <div class="text-[16px] font-light leading-[24px] text-white"><Content /></div>
             </li>
           ))}
         </ol>
@@ -48,15 +48,15 @@ const steps = await Promise.all(
             i % 2 === 1 ? 'lg:flex-row-reverse' : 'lg:flex-row',
           ]}
         >
-          <div class="flex flex-col gap-5 p-2.5 lg:w-1/2">
+          <div class="flex flex-col gap-5 p-2.5 lg:flex-1">
             <Icon name={(["user","heart-multiple","play"][i] ?? "user") as any} size={25} view="stacked" box={51} />
             <h2>{s.data.title}</h2>
-            <p class="body-copy text-[#2E2E2E]">{s.data.blurb}</p>
+            <p class="font-sans text-[18px] font-light leading-[27px] text-[#2E2E2E]">{s.data.blurb}</p>
             <div><Btn href="/consultation/">Get Consultation</Btn></div>
           </div>
           {s.data.image && (
-            <div class="p-2.5 lg:w-1/2">
-              <img src={s.data.image} alt={s.data.title} class="w-full object-cover" width="590" height="393" loading="lazy" />
+            <div class="p-2.5 lg:flex-1">
+              <img src={s.data.image} alt={s.data.title} class="w-full object-cover" style={`height:${s.data.imageHeight}px`} width="590" height={s.data.imageHeight} />
             </div>
           )}
         </div>

@@ -5,5 +5,6 @@ blurb: >-
   organizations tell their story, connect with donors, and raise funds while
   honoring their purpose.
 image: /images/services/fundraising-consultant.jpg
+imageHeight: 500
 order: 2
 ---

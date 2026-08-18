@@ -5,5 +5,6 @@ blurb: >-
   confidence, and connection. Ideal for galas, benefit events, and
   high-visibility fundraisers.
 image: /images/services/benefit-auctioneer.jpeg
+imageHeight: 393
 order: 1
 ---

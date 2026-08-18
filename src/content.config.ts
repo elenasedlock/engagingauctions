@@ -25,6 +25,7 @@ const services = defineCollection({
     title: z.string().min(1),
     blurb: z.string().min(20),
     image: z.string().optional(),
+    imageHeight: z.number().default(393),
     order: z.number().default(99),
   }),
 });

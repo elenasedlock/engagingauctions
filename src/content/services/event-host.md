@@ -5,5 +5,6 @@ blurb: >-
   We manage the flow, pacing, and engagement to keep guests excited and invested
   throughout the event.
 image: /images/services/event-host.jpeg
+imageHeight: 393
 order: 3
 ---
