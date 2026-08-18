@@ -36,9 +36,7 @@ const contact = [
         <ul class="mt-5 flex flex-col gap-2.5">
           {contact.map((c) => (
             <li class="flex min-h-[49px] items-center gap-2.5">
-              <span class="flex h-[49px] w-[49px] shrink-0 items-center justify-center bg-maroon text-[#D4B46C]">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d={c.icon} /></svg>
-              </span>
+              <Icon name={c.icon} size={20} view="stacked" box={49} class="text-[#D4B46C]" />
               {c.href ? (
                 <a href={c.href} class="block break-words font-display text-[22px] font-bold leading-[26.4px] text-white transition-opacity hover:opacity-85">{c.label}</a>
               ) : (
