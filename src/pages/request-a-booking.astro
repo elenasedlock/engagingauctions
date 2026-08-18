@@ -10,9 +10,14 @@ import Field from '../components/Field.astro';
 >
   <PageBanner title="Request a Booking" image="/images/banner/services.webp" />
 
+  <!--
+    Live: section padding 80/20, full-width form (no panel background),
+    Full Name + Phone side by side at 600 each, Email full width at 1220,
+    submit full width 1220x59.
+  -->
   <section class="wrap">
-    <div class="flex flex-col gap-5 px-2.5 py-[80px] md:py-[60px] lg:py-[80px]">
-      <h2 class="text-center lg:text-center">Request A Booking</h2>
+    <div class="flex flex-col gap-5 py-[80px] md:py-[60px] lg:py-[80px]">
+      <h2 class="p-2.5 text-center">Request A Booking</h2>
 
       <form
         name="booking"
@@ -20,16 +25,21 @@ import Field from '../components/Field.astro';
         data-netlify="true"
         netlify-honeypot="bot-field"
         action="/request-a-booking/?sent=1"
-        class="mx-auto mt-4 flex w-full max-w-3xl flex-col gap-5"
+        class="flex flex-col gap-5 p-2.5"
       >
         <input type="hidden" name="form-name" value="booking" />
         <p class="hidden"><label>Leave this empty: <input name="bot-field" /></label></p>
 
-        <Field name="name" label="Full Name" required />
-        <Field name="phone" label="Phone" type="tel" required placeholder="(201) 555-0123" />
-        <Field name="email" label="Email" type="email" required />
+        <div class="grid gap-5 sm:grid-cols-2">
+          <Field name="name" label="Full Name" required labelLeading={19} />
+          <Field name="phone" label="Phone" type="tel" required placeholder="(201) 555-0123" labelLeading={19} />
+        </div>
+        <Field name="email" label="Email" type="email" required labelLeading={19} />
 
-        <button type="submit" class="btn self-start bg-maroon px-5 text-cream hover:bg-[#5c1917]">
+        <button
+          type="submit"
+          class="btn h-[59px] w-full bg-maroon px-[15px] py-0 text-cream hover:bg-[#5c1917]"
+        >
           Book Now
         </button>
       </form>
